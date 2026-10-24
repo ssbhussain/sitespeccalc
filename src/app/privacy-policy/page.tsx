@@ -30,7 +30,7 @@ export default function PrivacyPage() {
         </p>
         <h2 className="font-display text-2xl text-slate-50">Journey by Mediavine and Raptive</h2>
         <p>
-          If a Journey by Mediavine or Raptive site ID is added to the deployment, that network may set cookies and collect device and usage data to measure and display advertising. Their policy then applies in addition to this one. Until that ID is configured, the site does not load their script.
+          The page head loads Grow by Mediavine (faves.grow.me) for this site. That network may set cookies and collect device and usage data to measure and display advertising. Their policy applies in addition to this one.
         </p>
         <h2 className="font-display text-2xl text-slate-50">GDPR</h2>
         <p>

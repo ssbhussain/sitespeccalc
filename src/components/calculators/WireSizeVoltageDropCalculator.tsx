@@ -197,7 +197,7 @@ export function WireSizeVoltageDropCalculator({
             <Stat label="Power loss" value={`${formatQty(result.lossW, 0)} W`} detail="I²R at the operating current" />
             <Stat label="Required ampacity" value={`${formatQty(result.requiredAmp, 1)} A`} detail={`Each conductor ${formatQty(result.ampacityEach, 0)} A`} />
             <Stat label="Material estimate" value={units.formatMoney(cost.totalUsd)} detail={`${cost.conductorCount} conductors + ${conduit}`} />
-            <Stat label="Conductor weight" value={metric ? `${formatQty(weight * 0.45359237, 1)} kg` : `${formatQty(weight, 1)} lb`} detail="Approximate insulated weight" />
+            <Stat label="Conductor weight" value={units.formatWeight(weight, 1)} detail={`${units.formatWeightOther(weight, 1)} · approximate insulated weight`} />
           </div>
           <DiagramFrame title="Single-line and conductor gauge" note="Circle diameters track circular mils. The drawing is a schematic, not a conduit-fill layout.">
             <svg viewBox="0 0 720 300" className="h-auto w-full" role="img" aria-label="Electrical single line from panel to load">

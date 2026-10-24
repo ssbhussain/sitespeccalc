@@ -18,6 +18,7 @@ export function SiteFooter() {
             <li><Link className="hover:text-amber-300" href="/calculators/electrical-solar/wire-size-voltage-drop-calculator">Wire and voltage drop</Link></li>
             <li><Link className="hover:text-amber-300" href="/calculators/framing-roofing/stair-stringer-layout-calculator">Stair stringers</Link></li>
             <li><Link className="hover:text-amber-300" href="/calculators/framing-roofing/roof-pitch-rafter-calculator">Roof pitch and rafters</Link></li>
+            <li><Link className="hover:text-amber-300" href="/calculators/freight-logistics/container-pallet-weight-calculator">Container and pallet load</Link></li>
           </ul>
         </div>
         <div>

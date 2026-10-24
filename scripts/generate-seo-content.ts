@@ -8,7 +8,7 @@ loadEnv({ path: ".env" });
 loadEnv({ path: ".env.local", override: true });
 
 const existing = new Set(PRESETS.map((preset) => preset.slug));
-const limit = Number(process.env.SEO_SEED_LIMIT ?? "200");
+const limit = Number(process.env.SEO_SEED_LIMIT ?? "520");
 const dryRun = process.argv.includes("--dry-run");
 
 interface Seed {
@@ -44,13 +44,19 @@ const calculators = [
     title: "Roof Pitch and Common Rafter Calculator",
     short_description: "Pitch, rafter length, squares, and sheathing.",
   },
+  {
+    slug: "container-pallet-weight-calculator",
+    cluster: "freight-logistics",
+    title: "Pallet, Container CBM, and Dimensional Weight Calculator",
+    short_description: "Pallet slots, CBM, payload, and billable weight.",
+  },
 ];
 
 function buildSeeds(): Seed[] {
   const seeds: Seed[] = [];
-  for (const lengthFt of [10, 12, 14, 16, 18, 20, 24, 28, 30, 36, 40]) {
-    for (const widthFt of [10, 12, 14, 16, 20, 24, 30]) {
-      for (const thicknessIn of [4, 5, 6]) {
+  for (const lengthFt of [8, 10, 12, 14, 16, 18, 20, 24, 28, 30, 36, 40, 48]) {
+    for (const widthFt of [8, 10, 12, 14, 16, 18, 20, 24, 30]) {
+      for (const thicknessIn of [4, 5, 6, 8]) {
         const preset_slug = `generated-${lengthFt}x${widthFt}-slab-${thicknessIn}-inch`;
         if (existing.has(preset_slug)) continue;
         seeds.push({
@@ -138,6 +144,73 @@ function buildSeeds(): Seed[] {
       });
     }
   }
+  for (const amps of [15, 25, 32, 48, 70, 80, 125, 150, 175, 200]) {
+    for (const distanceFt of [30, 45, 90, 120, 180]) {
+      const preset_slug = `generated-${amps}a-${distanceFt}ft-feeder-voltage-drop`;
+      seeds.push({
+        calculator_slug: "wire-size-voltage-drop-calculator",
+        preset_slug,
+        h1_title: `${amps} amp feeder at ${distanceFt} feet`,
+        default_inputs: {
+          system: amps >= 150 ? "1ph-240" : "1ph-240",
+          material: amps >= 100 ? "aluminum" : "copper",
+          amps,
+          distanceFt,
+          maxDropPct: amps >= 100 ? 5 : 3,
+          conduit: "PVC",
+          continuous: amps === 48 || amps === 32,
+          loadLabel: "Feeder",
+          comparison: { kind: "distance", feet: [distanceFt, distanceFt + 30] },
+        },
+        prompt: `${amps} A run at ${distanceFt} ft. Mention the 3 and 5 percent informational notes and that temperature derating is excluded.`,
+      });
+    }
+  }
+  for (const totalRiseIn of [36, 48, 60, 72, 84, 90, 102, 108, 114, 126, 132, 144]) {
+    const preset_slug = `generated-stair-rise-${totalRiseIn}-inch-layout`;
+    seeds.push({
+      calculator_slug: "stair-stringer-layout-calculator",
+      preset_slug,
+      h1_title: `Stringer layout for a ${totalRiseIn} inch rise`,
+      default_inputs: {
+        totalRiseIn,
+        targetRiseIn: 7.5,
+        treadIn: 10.5,
+        widthIn: 36,
+        mount: "standard",
+        landingThicknessIn: 1.5,
+        comparison: { kind: "total-rise", inches: [totalRiseIn, totalRiseIn + 6] },
+      },
+      prompt: `Stair total rise ${totalRiseIn} inches. Cite the 7.75 inch IRC riser limit and say headroom is not calculated.`,
+    });
+  }
+  for (const container of ["20ft", "40ft", "40hc", "53ft"]) {
+    for (const pallet of ["gma", "epal", "uk"]) {
+      for (const stackable of [false, true]) {
+        const preset_slug = `generated-${container}-${pallet}-${stackable ? "stacked" : "single"}-load`;
+        seeds.push({
+          calculator_slug: "container-pallet-weight-calculator",
+          preset_slug,
+          h1_title: `${container} ${pallet} pallet load${stackable ? ", stacked" : ""}`,
+          default_inputs: {
+            container,
+            pallet,
+            customPalletLengthIn: 48,
+            customPalletWidthIn: 40,
+            boxLengthIn: 16,
+            boxWidthIn: 12,
+            boxHeightIn: 12,
+            boxWeightLb: 30,
+            stackable,
+            rateBasis: "cbm",
+            rateUsd: 85,
+            comparison: { kind: "container", ids: ["20ft", "40ft", "40hc", "53ft"] },
+          },
+          prompt: `Container ${container} with ${pallet} pallets, stackable ${stackable}. Explain floor slots, 167 kg per cubic meter dimensional weight, and that the payload limit is a planning figure.`,
+        });
+      }
+    }
+  }
   return seeds.filter((seed) => !existing.has(seed.preset_slug)).slice(0, limit);
 }
 
@@ -199,11 +272,11 @@ async function main() {
     return;
   }
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+  const supabaseUrl = (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || "").trim();
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
   const openaiKey = process.env.OPENAI_API_KEY?.trim();
   if (!supabaseUrl || !serviceKey || !openaiKey) {
-    console.error("Set NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, and OPENAI_API_KEY before seeding.");
+    console.error("Set SUPABASE_URL or NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, and OPENAI_API_KEY before seeding.");
     process.exit(1);
   }
 
@@ -215,32 +288,52 @@ async function main() {
   );
   if (calculatorError) throw calculatorError;
 
+  const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+  async function withRetry<T>(work: () => Promise<T>): Promise<T> {
+    let wait = 1500;
+    for (let attempt = 0; attempt < 5; attempt += 1) {
+      try {
+        return await work();
+      } catch (error) {
+        const status = typeof error === "object" && error && "status" in error ? Number(error.status) : 0;
+        const message = error instanceof Error ? error.message : String(error);
+        const limited = status === 429 || message.toLowerCase().includes("rate");
+        if (!limited || attempt === 4) throw error;
+        await sleep(wait);
+        wait *= 2;
+      }
+    }
+    throw new Error("Seed retry failed.");
+  }
+
   let written = 0;
-  for (let index = 0; index < seeds.length; index += 5) {
-    const batch = seeds.slice(index, index + 5);
-    const rows = await Promise.all(
-      batch.map(async (seed) => {
-        const copy = await writeCopy(openai, seed);
-        return {
-          calculator_slug: seed.calculator_slug,
-          preset_slug: seed.preset_slug,
-          h1_title: seed.h1_title,
-          meta_title: copy.meta_title,
-          meta_description: copy.meta_description,
-          default_inputs: seed.default_inputs,
-          engineering_notes_html: copy.engineering_notes_html,
-          code_compliance_reference: copy.code_compliance_reference,
-          faqs: copy.faqs,
-          is_published: true,
-          updated_at: new Date().toISOString(),
-        };
-      }),
+  for (let index = 0; index < seeds.length; index += 3) {
+    const batch = seeds.slice(index, index + 3);
+    const rows = await withRetry(() =>
+      Promise.all(
+        batch.map(async (seed) => {
+          const copy = await writeCopy(openai, seed);
+          return {
+            calculator_slug: seed.calculator_slug,
+            preset_slug: seed.preset_slug,
+            h1_title: seed.h1_title,
+            meta_title: copy.meta_title,
+            meta_description: copy.meta_description,
+            default_inputs: seed.default_inputs,
+            engineering_notes_html: copy.engineering_notes_html,
+            code_compliance_reference: copy.code_compliance_reference,
+            faqs: copy.faqs,
+            is_published: true,
+            updated_at: new Date().toISOString(),
+          };
+        }),
+      ),
     );
     const { error } = await supabase.from("programmatic_presets").upsert(rows, { onConflict: "preset_slug" });
     if (error) throw error;
     written += rows.length;
     console.log(`Upserted ${written} / ${seeds.length}`);
-    await new Promise((resolve) => setTimeout(resolve, 400));
+    await sleep(1500);
   }
   console.log(`Finished ${written} programmatic presets.`);
 }

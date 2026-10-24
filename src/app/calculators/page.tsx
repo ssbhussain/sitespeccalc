@@ -12,7 +12,7 @@ export default function CalculatorsIndexPage() {
     <div className="mx-auto max-w-6xl px-4 py-10">
       <h1 className="font-display text-4xl font-semibold">Calculators</h1>
       <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-300">
-        Four master engines and the cluster hubs that hold the preset jobs. Every number on a page comes from the same functions as the master calculator.
+        Five master engines and the cluster hubs that hold the preset jobs. Every number on a page comes from the same functions as the master calculator.
       </p>
       <ul className="mt-6 grid gap-3 md:grid-cols-2">
         {MASTERS.map((master) => (

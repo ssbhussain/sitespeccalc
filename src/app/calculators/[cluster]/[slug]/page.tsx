@@ -47,9 +47,18 @@ export async function generateMetadata({
 }
 
 function relatedLinks(page: Preset, presets: Preset[]) {
-  return presets
-    .filter((item) => item.cluster === page.cluster && item.slug !== page.slug)
-    .slice(0, 5);
+  const same = presets.filter((item) => item.calculator === page.calculator && item.slug !== page.slug).slice(0, 6);
+  const other = presets.filter((item) => item.calculator !== page.calculator && item.slug !== page.slug);
+  const picked: Preset[] = [...same];
+  const seen = new Set(picked.map((item) => item.slug));
+  for (const calculator of ["concrete-slab", "wire-size", "stair-stringer", "roof-pitch", "container-pallet"] as const) {
+    if (calculator === page.calculator) continue;
+    const next = other.find((item) => item.calculator === calculator && !seen.has(item.slug));
+    if (!next) continue;
+    picked.push(next);
+    seen.add(next.slug);
+  }
+  return picked;
 }
 
 export default async function CalculatorPage({
@@ -96,6 +105,18 @@ export default async function CalculatorPage({
             <p className="mt-2 text-sm leading-7 text-slate-300">{page.codeReference}</p>
           </section>
           <FaqList faqs={page.faqs} />
+          <section className="mt-8">
+            <h2 className="font-display text-2xl font-semibold">Explore Related Engineering Calculations</h2>
+            <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+              {relatedLinks(page, presets).map((item) => (
+                <li key={item.slug}>
+                  <Link href={`/calculators/${item.cluster}/${item.slug}`} className="block rounded-xl border border-slate-700 p-4 text-sm text-slate-200 hover:border-amber-400">
+                    {item.h1}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
         </article>
         <aside className="space-y-4">
           <StickySidebarAd />

@@ -10,7 +10,8 @@ export type CalculatorId =
   | "concrete-slab"
   | "wire-size"
   | "stair-stringer"
-  | "roof-pitch";
+  | "roof-pitch"
+  | "container-pallet";
 
 export interface Faq {
   question: string;
@@ -71,6 +72,24 @@ export interface StairInputs {
 
 export type RoofStyle = "gable" | "shed";
 
+export type ContainerId = "20ft" | "40ft" | "40hc" | "53ft";
+export type PalletStandard = "gma" | "epal" | "uk" | "custom";
+export type FreightRateBasis = "cbm" | "tonne" | "lb";
+
+export interface ContainerInputs {
+  container: ContainerId;
+  pallet: PalletStandard;
+  customPalletLengthIn: number;
+  customPalletWidthIn: number;
+  boxLengthIn: number;
+  boxWidthIn: number;
+  boxHeightIn: number;
+  boxWeightLb: number;
+  stackable: boolean;
+  rateBasis: FreightRateBasis;
+  rateUsd: number;
+}
+
 export interface RoofInputs {
   spanFt: number;
   lengthFt: number;
@@ -86,7 +105,8 @@ export type Comparison =
   | { kind: "conductor" }
   | { kind: "total-rise"; inches: number[] }
   | { kind: "target-rise"; inches: number[] }
-  | { kind: "pitch"; risePer12: number[] };
+  | { kind: "pitch"; risePer12: number[] }
+  | { kind: "container"; ids: ContainerId[] };
 
 export interface PresetBase {
   cluster: ClusterId;
@@ -121,5 +141,10 @@ export type Preset =
   | (PresetBase & {
       calculator: "roof-pitch";
       defaultInputs: RoofInputs;
+      comparison: Comparison;
+    })
+  | (PresetBase & {
+      calculator: "container-pallet";
+      defaultInputs: ContainerInputs;
       comparison: Comparison;
     });

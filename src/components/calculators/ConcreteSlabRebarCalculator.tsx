@@ -244,10 +244,10 @@ export function ConcreteSlabRebarCalculator({
         <div className="space-y-4" aria-live="polite">
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
             <Stat label="Order volume" value={`${formatQty(result.orderYd3)} yd³`} detail={`${formatQty(result.orderM3, 3)} m³ placed+waste`} />
-            <Stat label="Order weight" value={metric ? `${formatQty(result.orderKg, 0)} kg` : `${formatQty(result.orderLb, 0)} lb`} detail={metric ? `${formatQty(result.orderLb, 0)} lb` : `${formatQty(result.orderKg, 0)} kg`} />
+            <Stat label="Order weight" value={units.formatWeight(result.orderLb, 0)} detail={units.formatWeightOther(result.orderLb, 0)} />
             <Stat label="80 lb bags" value={result.bags80.toLocaleString("en-US")} detail={`${result.pallets80.toLocaleString("en-US")} pallets at 42 bags`} />
             <Stat label="60 lb bags" value={result.bags60.toLocaleString("en-US")} detail={`${formatQty(BAG_60_CUFT, 2)} ft³ yield each`} />
-            <Stat label="Rebar" value={metric ? `${formatQty(result.netLinM)} m` : `${formatQty(result.netLinFt)} ft`} detail={`${result.bars20.toLocaleString("en-US")} × 20 ft · ${result.bars6m.toLocaleString("en-US")} × 6 m`} />
+            <Stat label="Rebar" value={metric ? `${formatQty(result.netLinM)} m` : `${formatQty(result.netLinFt)} ft`} detail={`${result.bars20.toLocaleString("en-US")} × 20 ft · ${result.bars6m.toLocaleString("en-US")} × 6 m · ${units.formatWeight(result.orderRebarLb, 0)}`} />
             <Stat label="Ready-mix vs bags" value={units.formatMoney(Math.min(readyTotal, result.bag80MaterialUsd))} detail={`Truck ${units.formatMoney(readyTotal)} · 80 lb bags ${units.formatMoney(result.bag80MaterialUsd)}`} />
           </div>
           <DiagramFrame
@@ -387,7 +387,7 @@ export function ConcreteSlabRebarCalculator({
         <div className={`rounded-xl border p-4 ${result.bag80MaterialUsd < readyTotal ? "border-emerald-500/50" : "border-slate-700"}`}>
           <p className="text-xs uppercase tracking-[0.14em] text-slate-400">80 lb bags</p>
           <p className="mt-1 font-mono text-2xl text-slate-50">{units.formatMoney(result.bag80MaterialUsd)}</p>
-          <p className="text-sm text-slate-400">60 lb alternative {units.formatMoney(result.bag60MaterialUsd)} · delivery weight {formatQty(result.orderLb, 0)} lb</p>
+          <p className="text-sm text-slate-400">60 lb alternative {units.formatMoney(result.bag60MaterialUsd)} · delivery weight {units.formatWeight(result.orderLb, 0)}</p>
         </div>
       </div>
       <div className="mt-6">
@@ -415,7 +415,7 @@ export function ConcreteSlabRebarCalculator({
       </div>
       <FormulaPanel>
         <p>Slab ft³ = L × W × thickness ÷ 12. Thickened-edge extra = footing band × (footing depth − slab thickness), with corner squares counted once.</p>
-        <p>yd³ = ft³ ÷ 27. m³ = ft³ × 0.0283168. Weight uses 150 lb/ft³. 80 lb bags yield {BAG_80_CUFT} ft³ and 60 lb bags yield {BAG_60_CUFT} ft³.</p>
+        <p>yd³ = ft³ ÷ 27. m³ = ft³ × 0.0283168. Weight uses 150 lb/ft³, then the header converts that pound total at 1 lb = 0.45359237 kg. 80 lb bags yield {BAG_80_CUFT} ft³ and 60 lb bags yield {BAG_60_CUFT} ft³. Currency changes the price labels only.</p>
         <p>Bars across a span = floor(span ÷ spacing) + 1. Order sticks = that count, plus 10, 5, or 15 percent waste, cut from 20 ft and 6 m stock. Chairs = one per grid intersection.</p>
       </FormulaPanel>
       <PrintSignoff project={project} />

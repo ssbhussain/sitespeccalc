@@ -4,7 +4,14 @@ import { useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { BrandLogo } from "@/components/BrandLogo";
-import { useUnits, type Currency } from "@/context/UnitContext";
+import {
+  CURRENCY_REGIONS,
+  FX_AS_OF,
+  currenciesInRegion,
+  useUnits,
+  type Currency,
+  type WeightUnit,
+} from "@/context/UnitContext";
 
 const LINKS = [
   { href: "/calculators/concrete-masonry", label: "Concrete" },
@@ -16,7 +23,7 @@ const LINKS = [
 ];
 
 export function SiteHeader() {
-  const { system, setSystem, currency, setCurrency } = useUnits();
+  const { system, setSystem, weight, setWeight, currency, setCurrency } = useUnits();
   const [open, setOpen] = useState(false);
 
   return (
@@ -30,8 +37,8 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <div className="ml-auto flex items-center gap-2">
-          <div className="flex rounded-md border border-slate-600 p-0.5 text-[11px] font-semibold uppercase tracking-wide" role="group" aria-label="Unit system">
+        <div className="ml-auto flex flex-wrap items-center justify-end gap-2">
+          <div className="flex rounded-md border border-slate-600 p-0.5 text-[11px] font-semibold uppercase tracking-wide" role="group" aria-label="Length and volume units">
             <button
               type="button"
               aria-pressed={system === "imperial"}
@@ -49,21 +56,36 @@ export function SiteHeader() {
               Metric
             </button>
           </div>
-          {system === "metric" ? (
-            <select
-              aria-label="Display currency"
-              value={currency}
-              onChange={(event) => setCurrency(event.target.value as Currency)}
-              className="rounded-md border border-slate-600 bg-slate-950 px-2 py-1 text-xs text-slate-100"
-            >
-              <option value="USD">USD $</option>
-              <option value="EUR">EUR €</option>
-              <option value="GBP">GBP £</option>
-              <option value="INR">INR ₹</option>
-            </select>
-          ) : (
-            <span className="hidden text-[11px] font-semibold uppercase tracking-wide text-slate-400 sm:inline">USD $</span>
-          )}
+          <div className="flex rounded-md border border-slate-600 p-0.5 text-[11px] font-semibold uppercase tracking-wide" role="group" aria-label="Weight unit">
+            {(["lb", "kg"] as const).map((unit) => (
+              <button
+                key={unit}
+                type="button"
+                aria-pressed={weight === unit}
+                onClick={() => setWeight(unit as WeightUnit)}
+                className={`rounded px-2 py-1 ${weight === unit ? "bg-amber-400 text-slate-950" : "text-slate-300"}`}
+              >
+                {unit}
+              </button>
+            ))}
+          </div>
+          <select
+            aria-label={`Display currency. Planning rates from US dollars as of ${FX_AS_OF}. Does not change quantities.`}
+            title={`Planning rates from USD, snapshot ${FX_AS_OF}. Volumes, counts, and sizes stay the same.`}
+            value={currency}
+            onChange={(event) => setCurrency(event.target.value as Currency)}
+            className="max-w-[16rem] rounded-md border border-slate-600 bg-slate-950 px-2 py-1 text-xs text-slate-100"
+          >
+            {CURRENCY_REGIONS.map((region) => (
+              <optgroup key={region} label={region}>
+                {currenciesInRegion(region).map((entry) => (
+                  <option key={entry.code} value={entry.code}>
+                    {entry.code} · {entry.name}
+                  </option>
+                ))}
+              </optgroup>
+            ))}
+          </select>
           <button
             type="button"
             className="rounded-md border border-slate-600 p-2 text-slate-200 lg:hidden"
@@ -89,7 +111,7 @@ export function SiteHeader() {
         </nav>
       ) : null}
       <p className="sr-only">
-        {system === "imperial" ? "Imperial units: feet, inches, cubic yards, pounds, AWG, US dollars." : "Metric units: meters, millimeters, cubic meters, kilograms, square millimeters, and the selected currency."}
+        {`Length ${system}. Weight ${weight}. Currency ${currency}. Weight uses 1 lb = 0.45359237 kg. Currency converts US-dollar planning prices and does not change volumes, counts, or geometry.`}
       </p>
     </header>
   );

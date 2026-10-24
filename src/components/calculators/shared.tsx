@@ -221,18 +221,19 @@ export function MoneyField({
   usd: number;
   onChange: (usd: number) => void;
 }) {
-  const { moneyToDisplay, displayToMoney, activeCurrency } = useUnits();
+  const { moneyToDisplay, displayToMoney, activeCurrency, fractionDigits } = useUnits();
   const shown = moneyToDisplay(usd);
+  const step = fractionDigits === 0 ? "1" : fractionDigits === 3 ? "0.001" : "0.01";
   return (
     <span className="inline-flex items-center gap-1">
       <input
         aria-label={label}
         type="number"
         min={0}
-        step="0.01"
-        value={Number.isFinite(shown) ? Number(shown.toFixed(2)) : 0}
+        step={step}
+        value={Number.isFinite(shown) ? Number(shown.toFixed(fractionDigits)) : 0}
         onChange={(event) => onChange(Math.max(0, displayToMoney(asNumber(event.target.value, 0))))}
-        className="w-24 rounded border border-slate-600 bg-slate-950 px-2 py-1 font-mono text-sm text-slate-50"
+        className="w-32 rounded border border-slate-600 bg-slate-950 px-2 py-1 font-mono text-sm text-slate-50"
       />
       <span className="text-[10px] uppercase text-slate-500">{activeCurrency}</span>
     </span>

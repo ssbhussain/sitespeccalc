@@ -24,7 +24,7 @@ export default function AboutPage() {
           What the desk does not do: soil bearing, frost depth, snow, wind, seismic, ampacity derating for ambient temperature or bundling, utility service rules, or a sealed drawing. Those stay with the licensed civil or structural engineer, the electrician, and the inspector who can see the site. Read the <Link className="text-amber-300" href="/engineering-disclaimer">engineering disclaimer</Link> before you order material.
         </p>
         <p>
-          Prices are planning numbers you can edit. Currency figures in metric mode use static rates so the page does not depend on a live exchange feed. Ready-mix, bag, wire, and lumber prices move by market and by region.
+          Prices are planning numbers you can edit, stored as US dollars. The header currency converts those dollars with a fixed snapshot from 24 October 2026, so the page does not call a live exchange feed. Switching currency or pounds versus kilograms does not change volumes, bag counts, wire size, riser height, or rafter length. Ready-mix, bag, wire, and lumber prices still move by market and by region.
         </p>
       </div>
     </article>

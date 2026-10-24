@@ -1,3 +1,4 @@
+import { EXPANSION_PRESETS } from "@/data/preset-expansion";
 import {
   FORMULA_VERSION,
   type Comparison,
@@ -332,7 +333,7 @@ export const PRESETS: Preset[] = [
     [
       ["How is the 18 inch edge different from the slab?", "The 6 in slab covers the full rectangle. The edge adds only the remaining 12 in of depth over the 12 in wide band, with corners counted once."],
       ["What stock length is used for rebar?", "The sheet reports both 20 ft sticks and 6 m sticks. Waste adds extra sticks for laps and cutoffs."],
-      ["Can the prices stay in dollars if I switch to metric?", "Imperial display stays in USD. Metric display can switch among USD, EUR, GBP, and INR using static planning rates."],
+      ["Can the prices stay in dollars if I switch to metric?", "Yes. Length, weight, and currency are separate. Choose USD or another currency in the header. The rate is a fixed planning snapshot from US dollars and does not change the cubic yards, bag count, or rebar sticks."],
     ],
     { kind: "thickness", inches: [6, 8] },
     { lengthFt: 60, widthFt: 40, thicknessIn: 6, thickenedEdge: true, footingWidthIn: 12, footingDepthIn: 18, spacingIn: 16, psi: 4000, waste: 0.1 },
@@ -827,4 +828,5 @@ export const PRESETS: Preset[] = [
     { lengthFt: 40, widthFt: 12, thicknessIn: 5, spacingIn: 18, psi: 4000, waste: 0.1 },
     "freight-logistics",
   ),
+  ...EXPANSION_PRESETS,
 ];

@@ -27,6 +27,11 @@ const engines = [
     title: "Roof pitch and rafters",
     copy: "Pitch angle, rafter length, plumb and seat cuts, squares, bundles, and sheathing.",
   },
+  {
+    href: "/calculators/freight-logistics/container-pallet-weight-calculator",
+    title: "Container, pallet, and CBM",
+    copy: "Pallet slots in a 20 ft, 40 ft, high cube, or 53 ft trailer, with payload, dimensional weight, and freight cost.",
+  },
 ];
 
 export default function HomePage() {
@@ -56,7 +61,7 @@ export default function HomePage() {
             Jobsite math you can scale, print, and take to the yard.
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">
-            SiteSpecCalc runs four deterministic calculators in the browser. Change a dimension and the blueprint, the bill of materials, and the side-by-side comparison move with it. Imperial units cover feet, inches, cubic yards, pounds, and AWG. Metric covers meters, millimeters, cubic meters, kilograms, and square millimeters.
+            SiteSpecCalc runs five deterministic calculators in the browser. Change a dimension and the blueprint, the bill of materials, and the side-by-side comparison move with it. Imperial units cover feet, inches, cubic yards, pounds, and AWG. Metric covers meters, millimeters, cubic meters, kilograms, and square millimeters.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link href="/calculators/concrete-masonry/concrete-slab-rebar-calculator" className="rounded-md bg-amber-400 px-4 py-3 text-sm font-bold text-slate-950">

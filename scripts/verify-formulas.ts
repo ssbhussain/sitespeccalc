@@ -1,8 +1,10 @@
 import { PRESETS } from "../src/data/presets";
+import { calculateContainer, floorSlots } from "../src/lib/engineering/container";
 import { calculateConcrete } from "../src/lib/engineering/concrete";
 import { calculateRoof } from "../src/lib/engineering/roof";
 import { calculateStairs } from "../src/lib/engineering/stairs";
 import { recommendWire } from "../src/lib/engineering/wire";
+import { detectVisitorLocale } from "../src/context/UnitContext";
 
 const clusters = new Map<string, number>();
 const slugs = new Set<string>();
@@ -11,6 +13,29 @@ for (const preset of PRESETS) {
   if (slugs.has(preset.slug)) throw new Error(`Duplicate slug ${preset.slug}`);
   slugs.add(preset.slug);
 }
+if (PRESETS.length < 120) throw new Error(`expected at least 120 presets, got ${PRESETS.length}`);
+const india = detectVisitorLocale("en-IN", "Asia/Kolkata");
+if (india.currency !== "INR" || india.system !== "metric" || india.weight !== "kg") throw new Error("india locale");
+const uk = detectVisitorLocale("en-GB", "Europe/London");
+if (uk.currency !== "GBP" || uk.weight !== "kg" || uk.system !== "imperial") throw new Error("uk locale");
+const euro20 = floorSlots(5.898, 2.352, 1.2, 0.8).length;
+const euro40 = floorSlots(12.032, 2.352, 1.2, 0.8).length;
+if (euro20 !== 11) throw new Error(`euro 20ft slots ${euro20}`);
+if (euro40 !== 25) throw new Error(`euro 40ft slots ${euro40}`);
+const loaded = calculateContainer({
+  container: "20ft",
+  pallet: "epal",
+  customPalletLengthIn: 48,
+  customPalletWidthIn: 40,
+  boxLengthIn: 16,
+  boxWidthIn: 12,
+  boxHeightIn: 12,
+  boxWeightLb: 30,
+  stackable: false,
+  rateBasis: "cbm",
+  rateUsd: 85,
+});
+if (loaded.floorCount !== 11) throw new Error(`loaded floor ${loaded.floorCount}`);
 
 const slab = calculateConcrete({
   lengthFt: 20,

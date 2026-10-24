@@ -184,6 +184,54 @@ export const MASTERS: Preset[] = [
       style: "gable",
     },
   },
+  {
+    calculator: "container-pallet",
+    calculatorSlug: "container-pallet-weight-calculator",
+    cluster: "freight-logistics",
+    slug: "container-pallet-weight-calculator",
+    h1: "Pallet, Container CBM, and Dimensional Weight Calculator",
+    metaTitle: "Container Pallet CBM and Dimensional Weight Calculator",
+    metaDescription:
+      "Fit US, Euro, and UK pallets in a 20 ft, 40 ft, 40 ft high-cube, or 53 ft trailer. Compare CBM, payload, dimensional weight, and freight cost.",
+    summary:
+      "Lay cartons on a pallet, then pack those pallets on the container floor. The plan shows slots, payload against the planning limit, and billable weight in the selected currency.",
+    engineeringNotesHtml:
+      "<p>Floor slots are a non-overlapping grid inside the published internal length and width. The better of a single orientation and a two-column mix is kept. A 1200 by 800 mm Euro pallet is 11 slots in a 20 ft dry container and 25 in a 40 ft dry container. Carton count is that slot count times the layers that fit above a 150 mm deck.</p><p>Volumetric weight uses 167 kg per cubic meter of carton cube. Billable weight is the greater of that figure and the actual payload, including pallet tare. Payload limits are planning numbers: typical ISO payloads for the dry boxes and 45,000 lb for the 53 ft trailer. They are not a booking confirmation.</p>",
+    codeReference:
+      "ISO internal planning dimensions for 20 ft and 40 ft dry containers, plus a 52 ft 6 in by 98.5 in US trailer interior. Confirm the carrier's payload and the IMDG or road limit before you book.",
+    faqs: [
+      {
+        question: "Why is billable weight sometimes higher than the scale weight?",
+        answer:
+          "The volumetric weight is the carton cube times 167 kg per cubic meter. Light freight is billed on that figure when it exceeds the actual kilograms.",
+      },
+      {
+        question: "Does double stacking always double the pallet count?",
+        answer:
+          "Only when the stackable control is on and two pallet levels fit under the internal height with 50 mm of clearance. A tall carton stays one high.",
+      },
+      {
+        question: "Is the payload limit a legal guarantee?",
+        answer:
+          "No. It is a planning limit for the selected box. Axle laws, the container tare, and the booking can be lower.",
+      },
+    ],
+    formulaVersion: version,
+    comparison: { kind: "container", ids: ["20ft", "40ft", "40hc", "53ft"] },
+    defaultInputs: {
+      container: "40ft",
+      pallet: "gma",
+      customPalletLengthIn: 48,
+      customPalletWidthIn: 40,
+      boxLengthIn: 16,
+      boxWidthIn: 12,
+      boxHeightIn: 12,
+      boxWeightLb: 30,
+      stackable: true,
+      rateBasis: "cbm",
+      rateUsd: 85,
+    },
+  },
 ];
 
 export function mastersForCluster(cluster: string) {

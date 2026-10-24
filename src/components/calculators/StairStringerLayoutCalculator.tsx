@@ -206,9 +206,9 @@ export function StairStringerLayoutCalculator({
           },
           {
             item: "Stringer delivery weight",
-            net: `${formatQty(result.lumberLb, 0)} lb`,
+            net: units.formatWeight(result.lumberLb, 0),
             waste: "—",
-            order: metric ? `${formatQty(result.lumberLb * 0.45359237, 0)} kg` : `${formatQty(result.lumberLb, 0)} lb`,
+            order: units.formatWeightOther(result.lumberLb, 0),
             price: <span className="text-xs text-slate-400">2.8 lb/ft planning weight</span>,
             total: "—",
           },

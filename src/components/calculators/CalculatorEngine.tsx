@@ -1,6 +1,7 @@
 "use client";
 
 import { ConcreteSlabRebarCalculator } from "@/components/calculators/ConcreteSlabRebarCalculator";
+import { ContainerPalletWeightCalculator } from "@/components/calculators/ContainerPalletWeightCalculator";
 import { RoofPitchRafterCalculator } from "@/components/calculators/RoofPitchRafterCalculator";
 import { StairStringerLayoutCalculator } from "@/components/calculators/StairStringerLayoutCalculator";
 import { WireSizeVoltageDropCalculator } from "@/components/calculators/WireSizeVoltageDropCalculator";
@@ -28,6 +29,15 @@ export function CalculatorEngine({ page }: { page: Preset }) {
   if (page.calculator === "stair-stringer") {
     return (
       <StairStringerLayoutCalculator
+        initial={page.defaultInputs}
+        comparison={page.comparison}
+        project={page.h1}
+      />
+    );
+  }
+  if (page.calculator === "container-pallet") {
+    return (
+      <ContainerPalletWeightCalculator
         initial={page.defaultInputs}
         comparison={page.comparison}
         project={page.h1}

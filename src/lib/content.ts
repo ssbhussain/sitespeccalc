@@ -8,6 +8,7 @@ const CALCULATOR_CLUSTER = {
   "wire-size-voltage-drop-calculator": "electrical-solar",
   "stair-stringer-layout-calculator": "framing-roofing",
   "roof-pitch-rafter-calculator": "framing-roofing",
+  "container-pallet-weight-calculator": "freight-logistics",
 } as const;
 
 type CalculatorSlug = keyof typeof CALCULATOR_CLUSTER;
@@ -17,6 +18,7 @@ const CALCULATOR_ID = {
   "wire-size-voltage-drop-calculator": "wire-size",
   "stair-stringer-layout-calculator": "stair-stringer",
   "roof-pitch-rafter-calculator": "roof-pitch",
+  "container-pallet-weight-calculator": "container-pallet",
 } as const;
 
 function isRecord(value: unknown): value is Record<string, unknown> {

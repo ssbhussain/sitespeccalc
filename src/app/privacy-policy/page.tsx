@@ -16,7 +16,7 @@ export default function PrivacyPage() {
         </p>
         <h2 className="font-display text-2xl text-slate-50">Information the site itself handles</h2>
         <p>
-          Calculator inputs stay in your browser. The imperial or metric choice and the display currency are saved in localStorage on your device. The contact form does not post to a SiteSpecCalc database. It opens your email program addressed to hello@sitespeccalc.com. If you send that email, we receive whatever you chose to include and use it only to reply.
+          Calculator inputs stay in your browser. On a first visit the site reads the browser language and time zone only to choose a starting length system, weight unit, and currency. The imperial or metric choice, the pound or kilogram choice, and the display currency are then saved in localStorage on your device. A later manual change replaces that starting choice. The contact form does not post to a SiteSpecCalc database. It opens your email program addressed to hello@sitespeccalc.com. If you send that email, we receive whatever you chose to include and use it only to reply.
         </p>
         <p>
           Server logs kept by the host can include IP address, user agent, and the URL requested. Those logs are used to operate and secure the site.

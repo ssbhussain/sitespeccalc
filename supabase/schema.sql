@@ -64,7 +64,8 @@ values
   ('concrete-slab-rebar-calculator', 'concrete-masonry', 'Concrete Slab, Rebar, and Bag Calculator', 'Volume, rebar, bags, and ready-mix for a slab-on-ground.', 'SSC-2026.1'),
   ('wire-size-voltage-drop-calculator', 'electrical-solar', 'Wire Size and Voltage Drop Calculator', 'AWG and mm2 conductor sizing with voltage drop.', 'SSC-2026.1'),
   ('stair-stringer-layout-calculator', 'framing-roofing', 'Stair Stringer Layout Calculator', 'Equal risers, run, and 2x12 stringer length.', 'SSC-2026.1'),
-  ('roof-pitch-rafter-calculator', 'framing-roofing', 'Roof Pitch and Common Rafter Calculator', 'Pitch, rafter length, squares, and sheathing.', 'SSC-2026.1')
+  ('roof-pitch-rafter-calculator', 'framing-roofing', 'Roof Pitch and Common Rafter Calculator', 'Pitch, rafter length, squares, and sheathing.', 'SSC-2026.1'),
+  ('container-pallet-weight-calculator', 'freight-logistics', 'Pallet, Container CBM, and Dimensional Weight Calculator', 'Pallet slots, CBM, payload, and billable weight.', 'SSC-2026.1')
 on conflict (slug) do update set
   title = excluded.title,
   short_description = excluded.short_description,

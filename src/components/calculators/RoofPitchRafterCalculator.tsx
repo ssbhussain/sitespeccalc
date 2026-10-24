@@ -145,6 +145,7 @@ export function RoofPitchRafterCalculator({
             <Stat label="Roof area" value={metric ? `${formatQty(result.areaM2, 1)} m²` : `${formatQty(result.areaFt2, 0)} ft²`} detail={`${formatQty(result.squares, 2)} squares`} />
             <Stat label="Shingle bundles" value={result.bundles.toLocaleString("en-US")} detail="3 bundles per square + 10% waste" />
             <Stat label="Sheathing / felt" value={`${result.sheets.toLocaleString("en-US")} sheets`} detail={`${result.rolls.toLocaleString("en-US")} underlayment rolls`} />
+            <Stat label="Delivery weight" value={units.formatWeight(result.shipLb, 0)} detail={`${units.formatWeightOther(result.shipLb, 0)} · 70 lb bundles, 46 lb sheets, 28 lb rolls`} />
           </div>
           <DiagramFrame title={style === "gable" ? "Gable truss triangle" : "Shed roof triangle"} note="Rise and run are scaled from the span, overhang, and pitch. The small triangle is the pitch ratio.">
             <svg viewBox="0 0 720 380" className="h-auto w-full" role="img" aria-label="Scaled roof section">
@@ -247,7 +248,7 @@ export function RoofPitchRafterCalculator({
       <FormulaPanel>
         <p>Angle = arctan(rise ÷ 12). Multiplier = √(1 + (rise ÷ 12)²). Gable run = span ÷ 2 − ridge thickness ÷ 2. Rafter length = (run + horizontal overhang) × multiplier.</p>
         <p>Plumb cut = pitch angle. Seat cut = 90° − pitch angle. Area uses both slopes on a gable and one slope on a shed, and it includes a rake overhang equal to the eave overhang.</p>
-        <p>Bundles = ceiling of squares × 3 × 1.10. Sheets = ceiling of area × 1.10 ÷ 32. Rolls use 360 ft² effective coverage. Delivery weight plans 70 lb per bundle, 46 lb per sheet, and 28 lb per roll.</p>
+        <p>Bundles = ceiling of squares × 3 × 1.10. Sheets = ceiling of area × 1.10 ÷ 32. Rolls use 360 ft² effective coverage. Delivery weight plans 70 lb per bundle, 46 lb per sheet, and 28 lb per roll, then the header converts that pound total at 1 lb = 0.45359237 kg.</p>
       </FormulaPanel>
       <PrintSignoff project={project} />
     </div>

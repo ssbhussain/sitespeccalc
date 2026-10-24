@@ -27,6 +27,6 @@ export const CLUSTER_META = {
     title: "Freight & Logistics",
     eyebrow: "Haul weight and truck class",
     description:
-      "Delivery planning for the same deterministic takeoffs: cubic yards per truck, bag pallets, rebar weight, wire spools, and roofing bundles.",
+      "Container and pallet loading, plus delivery planning for cubic yards, bag pallets, rebar weight, wire spools, and roofing bundles.",
   },
 } as const;

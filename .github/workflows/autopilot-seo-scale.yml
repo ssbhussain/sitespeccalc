@@ -37,7 +37,7 @@ jobs:
             echo "No preset file changes."
           else
             git commit -m "chore: publish autopilot calculator presets"
-            git push origin HEAD
+            git push origin "HEAD:${{ github.ref_name }}"
           fi
       - name: Notify IndexNow
         env:

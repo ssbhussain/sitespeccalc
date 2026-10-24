@@ -26,7 +26,7 @@ export default function PrivacyPage() {
           Pages may show ads from Google AdSense. Google, as a third-party vendor, uses cookies to serve ads based on a visit to this site and, where allowed, other sites. The DoubleClick DART cookie lets Google and its partners serve ads based on visits. You can opt out of the DART cookie by visiting the Google advertising opt-out at https://adssettings.google.com and the industry page at https://optout.aboutads.info. Third-party vendors and ad networks may also use cookies. SiteSpecCalc has no control over those cookies.
         </p>
         <p>
-          The current publisher placeholder is ca-pub-0000000000000000 until a live AdSense client ID is configured. Reserved ad containers keep a fixed minimum height so an ad load does not shift the calculator.
+          The AdSense publisher ID on this site is ca-pub-3430684260439635. The AdSense script is included in the page head. Reserved ad containers keep a fixed minimum height so an ad load does not shift the calculator.
         </p>
         <h2 className="font-display text-2xl text-slate-50">Journey by Mediavine and Raptive</h2>
         <p>

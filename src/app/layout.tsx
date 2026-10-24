@@ -46,6 +46,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${barlow.variable} ${display.variable} ${mono.variable} h-full antialiased`}>
+      <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3430684260439635"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className="min-h-full bg-ink text-foam">
         <a href="#content" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-white focus:px-3 focus:py-2 focus:text-slate-950">
           Skip to content

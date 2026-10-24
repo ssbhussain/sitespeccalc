@@ -37,8 +37,13 @@ body {
   display: none;
 }
 
-.embed-sheet .ad-slot {
+.embed-sheet .ad-slot,
+.embed-sheet .ad-slot-wrapper {
   display: none;
+}
+
+ins.adsbygoogle[data-ad-status="unfilled"] {
+  display: none !important;
 }
 
 @media print {
@@ -52,8 +57,10 @@ body {
   }
 
   .embed-sheet .ad-slot,
+  .embed-sheet .ad-slot-wrapper,
   .no-print,
   .ad-slot,
+  .ad-slot-wrapper,
   header,
   footer {
     display: none !important;

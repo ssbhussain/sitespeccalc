@@ -41,15 +41,22 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
+const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID?.trim() || "ca-pub-3430684260439635";
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${barlow.variable} ${display.variable} ${mono.variable} h-full antialiased`}>
       <head>
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3430684260439635"
-          crossOrigin="anonymous"
-        />
+        {adsenseClient ? (
+          <>
+            <meta name="google-adsense-account" content={adsenseClient} />
+            <script
+              async
+              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
+              crossOrigin="anonymous"
+            />
+          </>
+        ) : null}
         <script
           data-grow-initializer=""
           dangerouslySetInnerHTML={{

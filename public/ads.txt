@@ -1,5 +1,1 @@
 google.com, pub-3430684260439635, DIRECT, f08c47fec0942fa0
-
-# Publisher ca-pub-3430684260439635.
-# Add the Journey by Mediavine / Raptive DIRECT lines exactly as the network issues them.
-# NEXT_PUBLIC_GROW_SITE_ID in the environment is the site identifier for that network.

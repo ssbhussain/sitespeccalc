@@ -1,46 +1,55 @@
-import type { ReactNode } from "react";
+"use client";
 
-const PLACEHOLDER = "0000000000000000";
+import { useEffect } from "react";
 
-function adsenseEnabled() {
-  const client = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID ?? "";
-  return client.length > 0 && !client.includes(PLACEHOLDER);
+const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID?.trim() || "ca-pub-3430684260439635";
+const PRIMARY_SLOT = "8196980028";
+const SIDEBAR_SLOT = "3344112518";
+
+declare global {
+  interface Window {
+    adsbygoogle?: unknown[];
+  }
 }
 
-function SlotFrame({
-  label,
-  className,
-  children,
-}: {
-  label: string;
-  className: string;
-  children?: ReactNode;
-}) {
+function AdUnit({ slotId, className }: { slotId?: string; className?: string }) {
+  useEffect(() => {
+    if (!slotId || !ADSENSE_CLIENT) return;
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch {
+      // Ad blockers and a pending AdSense review both reject this call.
+    }
+  }, [slotId]);
+
+  if (!slotId || !ADSENSE_CLIENT) return null;
+
   return (
-    <aside className={`ad-slot no-print relative overflow-hidden rounded-lg border border-dashed border-slate-600 bg-slate-950/50 ${className}`} aria-label="Advertisement" data-ad-slot={label}>
-      <span className="pointer-events-none absolute left-2 top-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
-        Advertisement
-      </span>
-      {children}
-      {adsenseEnabled() ? (
-        <span className="sr-only">Google AdSense client configured. Reserved space stays fixed to protect layout shift.</span>
-      ) : null}
-    </aside>
+    <div className={`ad-slot-wrapper ${className ?? ""}`}>
+      <ins
+        className="adsbygoogle"
+        style={{ display: "block" }}
+        data-ad-client={ADSENSE_CLIENT}
+        data-ad-slot={slotId}
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      />
+    </div>
   );
 }
 
 export function TopLeaderboardAd() {
-  return <SlotFrame label="top-leaderboard" className="mb-6 min-h-[60px] w-full md:min-h-[90px]" />;
+  return <AdUnit slotId={PRIMARY_SLOT} className="mb-6" />;
 }
 
 export function InContentMidCalculatorAd() {
-  return <SlotFrame label="in-content-mid" className="my-6 min-h-[250px] w-full" />;
+  return <AdUnit slotId={PRIMARY_SLOT} className="my-6" />;
 }
 
 export function StickySidebarAd() {
   return (
-    <div className="no-print sticky top-24">
-      <SlotFrame label="sticky-sidebar" className="hidden min-h-[600px] w-full lg:block" />
+    <div className="no-print sticky top-24 hidden w-full lg:block">
+      <AdUnit slotId={SIDEBAR_SLOT} />
     </div>
   );
 }

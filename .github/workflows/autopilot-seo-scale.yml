@@ -29,8 +29,6 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: npm run seed:seo -- --batch=20
       - name: Commit generated presets
-        env:
-          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -40,8 +38,6 @@ jobs:
           else
             git commit -m "chore: publish autopilot calculator presets"
             git push origin "HEAD:${{ github.ref_name }}"
-            curl --fail-with-body --silent --show-error --request POST "$VERCEL_DEPLOY_HOOK" --output /tmp/vercel-deploy-hook.json
-            echo "Vercel production deploy hook accepted."
           fi
       - name: Notify IndexNow
         env:

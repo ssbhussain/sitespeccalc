@@ -1,0 +1,5 @@
+google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
+
+# Replace pub-0000000000000000 with the live Google AdSense publisher ID.
+# Add the Journey by Mediavine / Raptive DIRECT lines exactly as the network issues them.
+# NEXT_PUBLIC_GROW_SITE_ID in the environment is the site identifier for that network.

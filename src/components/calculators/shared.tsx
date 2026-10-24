@@ -2,6 +2,7 @@
 
 import { Printer } from "lucide-react";
 import type { ReactNode } from "react";
+import { MaterialAffiliateRow } from "@/components/MaterialAffiliateRow";
 import { asNumber } from "@/lib/engineering/format";
 import { useUnits } from "@/context/UnitContext";
 
@@ -176,12 +177,13 @@ export interface BomLine {
   order: string;
   price: ReactNode;
   total: string;
+  search: string;
 }
 
 export function BomTable({ lines }: { lines: BomLine[] }) {
   return (
     <div className="overflow-x-auto rounded-xl border border-slate-700">
-      <table className="spec-table w-full min-w-[720px] border-collapse text-left text-sm">
+      <table className="spec-table w-full min-w-[920px] border-collapse text-left text-sm">
         <caption className="px-3 py-3 text-left font-display text-xl font-semibold text-slate-50">
           Bill of materials and shopping list
         </caption>
@@ -193,6 +195,7 @@ export function BomTable({ lines }: { lines: BomLine[] }) {
             <th className="px-3 py-2">Order</th>
             <th className="px-3 py-2">Unit price</th>
             <th className="px-3 py-2">Line total</th>
+            <th className="px-3 py-2">Source Spec Material / Tool</th>
           </tr>
         </thead>
         <tbody>
@@ -204,10 +207,16 @@ export function BomTable({ lines }: { lines: BomLine[] }) {
               <td className="px-3 py-2 font-mono text-amber-100">{line.order}</td>
               <td className="px-3 py-2">{line.price}</td>
               <td className="px-3 py-2 font-mono text-slate-50">{line.total}</td>
+              <td className="px-3 py-2">
+                <MaterialAffiliateRow query={line.search} />
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <p className="px-3 py-3 text-xs leading-5 text-slate-400">
+        Source links open a product search on the Amazon storefront for the selected currency. SiteSpecCalc may earn a commission. The link does not change the quantities above.
+      </p>
     </div>
   );
 }

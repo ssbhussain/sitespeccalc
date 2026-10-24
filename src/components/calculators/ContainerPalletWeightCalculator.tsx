@@ -196,6 +196,7 @@ export function ContainerPalletWeightCalculator({
             order: `${result.totalPallets} pallets`,
             price: <span className="text-xs text-slate-400">Tare is included in payload</span>,
             total: units.formatWeight((result.totalKg - result.totalBoxes * boxWeightLb * LB_TO_KG) / LB_TO_KG, 0),
+            search: `${result.palletLabel} wood shipping pallet`,
           },
           {
             item: "Cartons",
@@ -204,6 +205,7 @@ export function ContainerPalletWeightCalculator({
             order: `${result.totalBoxes.toLocaleString("en-US")} cartons`,
             price: <span className="text-xs text-slate-400">{units.formatWeight(boxWeightLb, 1)} each</span>,
             total: units.formatWeight(result.totalBoxes * boxWeightLb, 0),
+            search: "corrugated shipping cartons",
           },
           {
             item: "Freight",
@@ -212,6 +214,7 @@ export function ContainerPalletWeightCalculator({
             order: units.formatWeight(result.billableLb, 0),
             price: <MoneyField label={rateLabel} usd={rateUsd} onChange={setRateUsd} />,
             total: units.formatMoney(result.freightUsd),
+            search: "pallet jack",
           },
         ]}
       />

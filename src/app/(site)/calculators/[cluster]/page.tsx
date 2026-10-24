@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { TopLeaderboardAd } from "@/components/AdSlot";
 import { mastersForCluster } from "@/data/catalog";
-import { PRESETS } from "@/data/presets";
+import { getPresetCatalog } from "@/lib/content";
 import { CLUSTER_META } from "@/lib/site";
 
 type ClusterParams = { cluster: string };
@@ -31,7 +31,8 @@ export default async function ClusterPage({ params }: { params: Promise<ClusterP
   if (!(cluster in CLUSTER_META)) notFound();
   const meta = CLUSTER_META[cluster as keyof typeof CLUSTER_META];
   const masters = mastersForCluster(cluster);
-  const presets = PRESETS.filter((preset) => preset.cluster === cluster);
+  const masterSlugs = new Set(masters.map((item) => item.slug));
+  const presets = (await getPresetCatalog()).filter((preset) => preset.cluster === cluster && !masterSlugs.has(preset.slug));
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">

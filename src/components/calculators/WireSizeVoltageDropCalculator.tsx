@@ -243,6 +243,7 @@ export function WireSizeVoltageDropCalculator({
               />
             ),
             total: units.formatMoney(cost.wireUsd),
+            search: `${result.wire ? wireName(result.wire) : "THHN"} THHN ${material === "copper" ? "Copper" : "Aluminum"} Wire`,
           },
           {
             item: `${conduit} conduit`,
@@ -260,6 +261,16 @@ export function WireSizeVoltageDropCalculator({
               />
             ),
             total: units.formatMoney(cost.conduitUsd),
+            search: `${conduit} conduit`,
+          },
+          {
+            item: `${Math.ceil(amps)} A breaker`,
+            net: system.startsWith("3ph") ? "3-pole" : "2-pole",
+            waste: "—",
+            order: "1",
+            price: <span className="text-xs text-slate-400">Match the calculated load</span>,
+            total: "—",
+            search: `${Math.ceil(amps)} Amp ${system.startsWith("3ph") ? "3-Pole" : "2-Pole"} Breaker`,
           },
         ]}
       />

@@ -203,6 +203,7 @@ export function StairStringerLayoutCalculator({
             order: `${result.stringers} boards`,
             price: <MoneyField label="2x12 price per foot" usd={boardPrice} onChange={setBoardPrice} />,
             total: units.formatMoney(boardUsd),
+            search: `${stockLabel} lumber`,
           },
           {
             item: "Stringer delivery weight",
@@ -211,6 +212,7 @@ export function StairStringerLayoutCalculator({
             order: units.formatWeightOther(result.lumberLb, 0),
             price: <span className="text-xs text-slate-400">2.8 lb/ft planning weight</span>,
             total: "—",
+            search: "Framing Square with Stair Gauges",
           },
         ]}
       />

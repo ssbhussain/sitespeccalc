@@ -196,6 +196,7 @@ export function RoofPitchRafterCalculator({
             order: `${result.bundles.toLocaleString("en-US")} bundles`,
             price: <MoneyField label="Bundle price" usd={bundlePrice} onChange={setBundlePrice} />,
             total: units.formatMoney(result.bundles * bundlePrice),
+            search: "architectural asphalt shingles",
           },
           {
             item: "4x8 CDX sheathing",
@@ -204,6 +205,7 @@ export function RoofPitchRafterCalculator({
             order: `${result.sheets.toLocaleString("en-US")} sheets`,
             price: <MoneyField label="Sheet price" usd={sheetPrice} onChange={setSheetPrice} />,
             total: units.formatMoney(result.sheets * sheetPrice),
+            search: "4x8 CDX plywood sheathing",
           },
           {
             item: "Underlayment rolls",
@@ -212,6 +214,7 @@ export function RoofPitchRafterCalculator({
             order: `${result.rolls.toLocaleString("en-US")} rolls`,
             price: <MoneyField label="Roll price" usd={rollPrice} onChange={setRollPrice} />,
             total: units.formatMoney(result.rolls * rollPrice),
+            search: "roofing underlayment roll",
           },
           {
             item: "Ridge cap bundles",
@@ -220,6 +223,7 @@ export function RoofPitchRafterCalculator({
             order: `${result.ridgeBundles.toLocaleString("en-US")} bundles`,
             price: <span className="text-xs text-slate-400">25 ft per bundle</span>,
             total: "—",
+            search: "ridge cap shingles",
           },
         ]}
       />

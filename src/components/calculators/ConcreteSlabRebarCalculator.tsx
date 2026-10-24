@@ -312,6 +312,7 @@ export function ConcreteSlabRebarCalculator({
             order: `${formatQty(result.orderYd3)} yd³ / ${formatQty(result.orderM3, 3)} m³`,
             price: <MoneyField label="Ready-mix unit price" usd={readyMixPerYd3} onChange={setReadyMixPerYd3} />,
             total: units.formatMoney(result.readyMixMaterialUsd),
+            search: `${psi} PSI ready mix concrete`,
           },
           {
             item: "Short-load fee",
@@ -326,6 +327,7 @@ export function ConcreteSlabRebarCalculator({
               />
             ),
             total: units.formatMoney(shortFee),
+            search: "Laser Distance Measure",
           },
           {
             item: "80 lb pre-mix bags",
@@ -334,6 +336,7 @@ export function ConcreteSlabRebarCalculator({
             order: `${result.bags80.toLocaleString("en-US")} bags`,
             price: <MoneyField label="80 pound bag price" usd={bag80Price} onChange={setBag80Price} />,
             total: units.formatMoney(result.bag80MaterialUsd),
+            search: "80 lb concrete mix bags",
           },
           {
             item: "60 lb pre-mix bags",
@@ -342,6 +345,7 @@ export function ConcreteSlabRebarCalculator({
             order: `${result.bags60.toLocaleString("en-US")} bags`,
             price: <MoneyField label="60 pound bag price" usd={bag60Price} onChange={setBag60Price} />,
             total: units.formatMoney(result.bag60MaterialUsd),
+            search: "60 lb concrete mix bags",
           },
           {
             item: `${spec.label} rebar sticks, 20 ft`,
@@ -359,6 +363,7 @@ export function ConcreteSlabRebarCalculator({
               />
             ),
             total: units.formatMoney(result.orderBars20 * rebarUnit),
+            search: `${spec.label} rebar 20 ft`,
           },
           {
             item: "Rebar chairs",
@@ -367,6 +372,7 @@ export function ConcreteSlabRebarCalculator({
             order: `${result.chairs.toLocaleString("en-US")} chairs`,
             price: <MoneyField label="Chair price" usd={chairPrice} onChange={setChairPrice} />,
             total: units.formatMoney(result.chairs * chairPrice),
+            search: "Rebar Support Chairs",
           },
           {
             item: "Tie wire rolls",
@@ -375,6 +381,7 @@ export function ConcreteSlabRebarCalculator({
             order: `${result.tieRolls.toLocaleString("en-US")} rolls`,
             price: <MoneyField label="Tie wire roll price" usd={tiePrice} onChange={setTiePrice} />,
             total: units.formatMoney(result.tieRolls * tiePrice),
+            search: "rebar tie wire",
           },
         ]}
       />

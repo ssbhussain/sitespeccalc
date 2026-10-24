@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "seed:seo": "npx tsx scripts/generate-seo-content.ts"
+    "seed:seo": "npx tsx scripts/generate-seo-content.ts",
+    "indexnow": "npx tsx scripts/submit-indexnow.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.118.0",

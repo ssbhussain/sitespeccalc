@@ -37,6 +37,10 @@ body {
   display: none;
 }
 
+.embed-sheet .ad-slot {
+  display: none;
+}
+
 @media print {
   :root {
     color-scheme: light;
@@ -47,6 +51,7 @@ body {
     color: #0f172a !important;
   }
 
+  .embed-sheet .ad-slot,
   .no-print,
   .ad-slot,
   header,

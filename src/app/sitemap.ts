@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { MASTERS } from "@/data/catalog";
 import { getPresetCatalog } from "@/lib/content";
+import { EMBED_CALCULATOR_SLUGS } from "@/lib/indexnow";
 import { CLUSTER_META, SITE_URL } from "@/lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -9,6 +10,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = [
     "",
     "/calculators",
+    "/directory",
     "/about",
     "/privacy-policy",
     "/terms-of-service",
@@ -35,6 +37,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.9,
   }));
 
+  const embeds = EMBED_CALCULATOR_SLUGS.map((slug) => ({
+    url: `${SITE_URL}/embed/${slug}`,
+    lastModified,
+    changeFrequency: "monthly" as const,
+    priority: 0.4,
+  }));
+
   const pages = presets.map((item) => ({
     url: `${SITE_URL}/calculators/${item.cluster}/${item.slug}`,
     lastModified,
@@ -42,5 +51,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...clusters, ...masters, ...pages];
+  return [...staticRoutes, ...clusters, ...masters, ...embeds, ...pages];
 }

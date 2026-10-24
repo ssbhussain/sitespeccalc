@@ -32,6 +32,10 @@ export default function PrivacyPage() {
         <p>
           The page head loads Grow by Mediavine (faves.grow.me) for this site. That network may set cookies and collect device and usage data to measure and display advertising. Their policy applies in addition to this one.
         </p>
+        <h2 className="font-display text-2xl text-slate-50">Amazon product searches</h2>
+        <p>
+          Bill-of-materials rows link to an Amazon search for that item on the storefront that matches the selected currency. The link includes the Amazon Associates tag from the site configuration, or the placeholder tag sitespeccalc-20 until a live tag is set. Amazon may set cookies on its own site. SiteSpecCalc may earn a commission. Those links do not change calculated quantities.
+        </p>
         <h2 className="font-display text-2xl text-slate-50">GDPR</h2>
         <p>
           If you are in the European Economic Area or the United Kingdom, the legal bases we rely on are consent, where a cookie banner or the browser controls it, and legitimate interests in keeping the site secure and understanding aggregate traffic. You may request access, correction, deletion, restriction, or a copy of personal data we hold, and you may object to processing based on legitimate interests. You may also lodge a complaint with your supervisory authority. Contact hello@sitespeccalc.com. We do not knowingly sell personal information.

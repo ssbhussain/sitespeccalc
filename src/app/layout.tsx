@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Barlow, Barlow_Condensed, JetBrains_Mono } from "next/font/google";
-import { SiteFooter } from "@/components/SiteFooter";
-import { SiteHeader } from "@/components/SiteHeader";
 import { UnitProvider } from "@/context/UnitContext";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
@@ -60,16 +58,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         />
       </head>
       <body className="min-h-full bg-ink text-foam">
-        <a href="#content" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-white focus:px-3 focus:py-2 focus:text-slate-950">
-          Skip to content
-        </a>
-        <UnitProvider>
-          <SiteHeader />
-          <main id="content" className="flex-1">
-            {children}
-          </main>
-          <SiteFooter />
-        </UnitProvider>
+        <UnitProvider>{children}</UnitProvider>
       </body>
     </html>
   );

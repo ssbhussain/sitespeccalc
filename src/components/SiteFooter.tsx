@@ -41,8 +41,11 @@ export function SiteFooter() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-slate-800 px-4 py-4 text-center text-xs text-slate-500">
-        © 2026 SiteSpecCalc. Estimates only. Verify with a licensed local professional and the inspector.
+      <div className="border-t border-slate-800 px-4 py-4 text-center text-sm">
+        <Link href="/directory" className="font-semibold text-amber-200 hover:text-amber-300">
+          All 120+ Engineering Specs & Calculators
+        </Link>
+        <p className="mt-2 text-xs text-slate-500">© 2026 SiteSpecCalc. Estimates only. Verify with a licensed local professional and the inspector.</p>
       </div>
     </footer>
   );

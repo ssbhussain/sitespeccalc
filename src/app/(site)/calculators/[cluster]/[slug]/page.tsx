@@ -4,10 +4,9 @@ import { notFound } from "next/navigation";
 import { StickySidebarAd, TopLeaderboardAd } from "@/components/AdSlot";
 import { EngineeringNotes, FaqList } from "@/components/ContentBlocks";
 import { CalculatorEngine } from "@/components/calculators/CalculatorEngine";
-import { JsonLd } from "@/components/JsonLd";
+import { CalculatorSchema } from "@/components/CalculatorSchema";
 import { MASTERS } from "@/data/catalog";
 import { findCalculatorPage, getPresetCatalog } from "@/lib/content";
-import { calculatorJsonLd } from "@/lib/jsonld";
 import { CLUSTER_META, SITE_URL } from "@/lib/site";
 import type { Preset } from "@/lib/types";
 
@@ -75,13 +74,12 @@ export default async function CalculatorPage({
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
-      <JsonLd
-        data={calculatorJsonLd({
-          name: page.h1,
-          description: page.metaDescription,
-          url,
-          faqs: page.faqs,
-        })}
+      <CalculatorSchema
+        name={page.h1}
+        description={page.metaDescription}
+        url={url}
+        faqs={page.faqs}
+        calculator={page.calculator}
       />
       <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px]">
         <article>

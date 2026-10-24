@@ -5,10 +5,12 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useState,
   useSyncExternalStore,
   type ReactNode,
 } from "react";
 import { formatQty } from "@/lib/engineering/format";
+import { publishSearchParams } from "@/hooks/useUrlSyncedState";
 
 export type UnitSystem = "imperial" | "metric";
 export type WeightUnit = "lb" | "kg";
@@ -283,27 +285,53 @@ export function UnitProvider({ children }: { children: ReactNode }) {
     currencyStore.getServerSnapshot,
   );
   const weight = useSyncExternalStore(weightStore.subscribe, weightStore.getSnapshot, weightStore.getServerSnapshot);
+  const [queryReady, setQueryReady] = useState(false);
 
   useEffect(() => {
-    if (window.localStorage.getItem(LOCALE_APPLIED_KEY) === "1") return;
-    const hasManualChoice =
-      window.localStorage.getItem(STORAGE_KEY) !== null ||
-      window.localStorage.getItem(CURRENCY_KEY) !== null ||
-      window.localStorage.getItem(WEIGHT_KEY) !== null;
-    if (hasManualChoice) {
+    const params = new URLSearchParams(window.location.search);
+    const unit = params.get("unit");
+    const wt = params.get("wt");
+    const curr = params.get("curr");
+    const hasQuery = unit === "ft" || unit === "m" || isWeight(wt) || isCurrency(curr);
+    if (hasQuery) {
+      if (unit === "m") systemStore.set("metric");
+      if (unit === "ft") systemStore.set("imperial");
+      if (isWeight(wt)) {
+        window.localStorage.setItem(WEIGHT_EXPLICIT_KEY, "1");
+        weightStore.set(wt);
+      }
+      if (isCurrency(curr)) currencyStore.set(curr);
       markLocaleApplied();
-      return;
+    } else if (window.localStorage.getItem(LOCALE_APPLIED_KEY) !== "1") {
+      const hasManualChoice =
+        window.localStorage.getItem(STORAGE_KEY) !== null ||
+        window.localStorage.getItem(CURRENCY_KEY) !== null ||
+        window.localStorage.getItem(WEIGHT_KEY) !== null;
+      if (hasManualChoice) {
+        markLocaleApplied();
+      } else {
+        const detected = detectVisitorLocale(
+          navigator.language || "en-US",
+          Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC",
+        );
+        systemStore.set(detected.system);
+        window.localStorage.setItem(WEIGHT_EXPLICIT_KEY, "1");
+        weightStore.set(detected.weight);
+        currencyStore.set(detected.currency);
+        markLocaleApplied();
+      }
     }
-    const detected = detectVisitorLocale(
-      navigator.language || "en-US",
-      Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC",
-    );
-    systemStore.set(detected.system);
-    window.localStorage.setItem(WEIGHT_EXPLICIT_KEY, "1");
-    weightStore.set(detected.weight);
-    currencyStore.set(detected.currency);
-    markLocaleApplied();
+    setQueryReady(true);
   }, []);
+
+  useEffect(() => {
+    if (!queryReady) return;
+    publishSearchParams({
+      unit: system === "metric" ? "m" : "ft",
+      wt: weight,
+      curr: currency,
+    });
+  }, [currency, queryReady, system, weight]);
 
   const value = useMemo<UnitContextValue>(() => {
     const entry = CURRENCY_BY_CODE.get(currency) ?? CURRENCIES[0];

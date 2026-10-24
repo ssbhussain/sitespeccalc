@@ -1,7 +1,20 @@
 import { cacheLife } from "next/cache";
-import type { Preset } from "@/lib/types";
+import generatedJson from "@/data/generated-presets.json";
+import type { CalculatorId, Preset } from "@/lib/types";
 import { PRESETS } from "@/data/presets";
 import { MASTERS } from "@/data/catalog";
+
+const CALCULATOR_IDS = new Set<CalculatorId>(["concrete-slab", "wire-size", "stair-stringer", "roof-pitch", "container-pallet"]);
+
+function isPreset(value: unknown): value is Preset {
+  if (!value || typeof value !== "object") return false;
+  const row = value as Partial<Preset>;
+  return typeof row.slug === "string" && typeof row.calculator === "string" && CALCULATOR_IDS.has(row.calculator as CalculatorId);
+}
+
+function readGeneratedPresets(): Preset[] {
+  return (generatedJson as unknown[]).filter(isPreset);
+}
 
 const CALCULATOR_CLUSTER = {
   "concrete-slab-rebar-calculator": "concrete-masonry",
@@ -90,19 +103,15 @@ async function loadRemotePresets(): Promise<Preset[]> {
 }
 
 export async function getPresetCatalog(): Promise<Preset[]> {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
-  if (!url || !key) return PRESETS;
+  const merged = new Map<string, Preset>();
   try {
-    const remote = await loadRemotePresets();
-    if (!remote.length) return PRESETS;
-    const merged = new Map<string, Preset>();
-    for (const preset of remote) merged.set(preset.slug, preset);
-    for (const preset of PRESETS) merged.set(preset.slug, preset);
-    return [...merged.values()];
+    for (const preset of await loadRemotePresets()) merged.set(preset.slug, preset);
   } catch {
-    return PRESETS;
+    // The committed JSON still supplies presets when the database is unreachable.
   }
+  for (const preset of readGeneratedPresets()) merged.set(preset.slug, preset);
+  for (const preset of PRESETS) merged.set(preset.slug, preset);
+  return [...merged.values()];
 }
 
 export function findCalculatorPage(cluster: string, slug: string, presets: Preset[]) {

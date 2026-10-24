@@ -10,12 +10,13 @@ import {
   FormulaPanel,
   MoneyField,
   NumberControl,
-  PrintButton,
   PrintSignoff,
+  QuoteShareActions,
   SelectControl,
   Stat,
 } from "@/components/calculators/shared";
 import { useUnits } from "@/context/UnitContext";
+import { choiceParam, flagParam, numberChoice, numberParam, useApplyQuery, usePublishSearchParams } from "@/hooks/useUrlSyncedState";
 import {
   BAG_60_CUFT,
   BAG_80_CUFT,
@@ -64,6 +65,27 @@ export function ConcreteSlabRebarCalculator({
   const [chairPrice, setChairPrice] = useState(0.28);
   const [tiePrice, setTiePrice] = useState(8);
   const [shortFeeOverride, setShortFeeOverride] = useState<number | null>(null);
+  const queryReady = useApplyQuery((params) => {
+    setLengthFt(numberParam(params, "l", initial.lengthFt));
+    setWidthFt(numberParam(params, "w", initial.widthFt));
+    setThicknessIn(numberParam(params, "t", initial.thicknessIn));
+    setThickenedEdge(flagParam(params, "edge", initial.thickenedEdge));
+    setRebarSize(choiceParam(params, "rebar", initial.rebarSize, ["3", "4", "5"] as const));
+    setSpacingIn(numberChoice(params, "space", initial.spacingIn, SPACING));
+    setPsi(numberChoice(params, "psi", initial.psi, PSI));
+  });
+  usePublishSearchParams(
+    {
+      l: lengthFt,
+      w: widthFt,
+      t: thicknessIn,
+      edge: thickenedEdge ? 1 : 0,
+      rebar: rebarSize,
+      space: spacingIn,
+      psi,
+    },
+    queryReady,
+  );
 
   const inputs = useMemo<ConcreteInputs>(
     () => ({
@@ -123,7 +145,9 @@ export function ConcreteSlabRebarCalculator({
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
           Formula SSC-2026.1 · {psi.toLocaleString("en-US")} PSI
         </p>
-        <PrintButton />
+        <QuoteShareActions
+          summary={`Concrete spec: ${formatQty(lengthFt, 1)} ft by ${formatQty(widthFt, 1)} ft at ${formatQty(thicknessIn, 1)} in. Order ${formatQty(result.orderYd3)} yd³ (${result.bags80} bags of 80 lb mix).`}
+        />
       </div>
       <div className="grid gap-6 lg:grid-cols-[300px_minmax(0,1fr)]">
         <form className="no-print space-y-4 rounded-xl border border-slate-700 bg-[#111c31] p-4">
@@ -304,6 +328,7 @@ export function ConcreteSlabRebarCalculator({
       </div>
       <InContentMidCalculatorAd />
       <BomTable
+        calculator="concrete-slab"
         lines={[
           {
             item: "Ready-mix concrete",

@@ -1,5 +1,6 @@
 import { config as loadEnv } from "dotenv";
 import { createClient } from "@supabase/supabase-js";
+import generatedJson from "../src/data/generated-presets.json";
 import { MASTERS } from "../src/data/catalog";
 import { PRESETS } from "../src/data/presets";
 import { INDEXNOW_KEY } from "../src/lib/indexnow";
@@ -60,6 +61,15 @@ async function collectUrls() {
   }
   for (const preset of PRESETS) {
     urls.add(calculatorUrl(preset.cluster, preset.slug));
+  }
+  const generatedRows = generatedJson as unknown[];
+  if (Array.isArray(generatedRows)) {
+    for (const row of generatedRows) {
+      if (!row || typeof row !== "object") continue;
+      const slug = "slug" in row && typeof row.slug === "string" ? row.slug : "";
+      const cluster = "cluster" in row && typeof row.cluster === "string" ? row.cluster : "";
+      if (slug && cluster) urls.add(calculatorUrl(cluster, slug));
+    }
   }
   for (const remote of await remotePresetUrls()) urls.add(remote);
   return [...urls];

@@ -10,12 +10,13 @@ import {
   FormulaPanel,
   MoneyField,
   NumberControl,
-  PrintButton,
   PrintSignoff,
+  QuoteShareActions,
   SelectControl,
   Stat,
 } from "@/components/calculators/shared";
 import { useUnits } from "@/context/UnitContext";
+import { choiceParam, numberParam, useApplyQuery, usePublishSearchParams } from "@/hooks/useUrlSyncedState";
 import { formatFeetInches, formatQty } from "@/lib/engineering/format";
 import { calculateRoof, pitchFromDegrees } from "@/lib/engineering/roof";
 import type { Comparison, RoofInputs, RoofStyle } from "@/lib/types";
@@ -40,6 +41,14 @@ export function RoofPitchRafterCalculator({
   const [bundlePrice, setBundlePrice] = useState(42);
   const [sheetPrice, setSheetPrice] = useState(28);
   const [rollPrice, setRollPrice] = useState(55);
+  const queryReady = useApplyQuery((params) => {
+    setSpanFt(numberParam(params, "span", initial.spanFt));
+    setLengthFt(numberParam(params, "len", initial.lengthFt));
+    setPitchRise(numberParam(params, "pitch", initial.pitchRise));
+    setOverhangFt(numberParam(params, "oh", initial.overhangFt));
+    setStyle(choiceParam(params, "style", initial.style, ["gable", "shed"] as const));
+  });
+  usePublishSearchParams({ span: spanFt, len: lengthFt, pitch: pitchRise, oh: overhangFt, style }, queryReady);
 
   const inputs = useMemo<RoofInputs>(
     () => ({ spanFt, lengthFt, pitchRise, overhangFt, ridgeIn, style }),
@@ -69,7 +78,9 @@ export function RoofPitchRafterCalculator({
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
           {formatQty(pitchRise, 2)} / 12 · {formatQty(result.angleDeg, 2)}°
         </p>
-        <PrintButton />
+        <QuoteShareActions
+          summary={`Roof spec: ${formatQty(pitchRise, 2)}/12 on a ${formatQty(spanFt, 1)} ft span. Rafter ${formatQty(result.rafterFt, 2)} ft.`}
+        />
       </div>
       <div className="grid gap-6 lg:grid-cols-[300px_minmax(0,1fr)]">
         <form className="no-print space-y-4 rounded-xl border border-slate-700 bg-[#111c31] p-4">
@@ -188,6 +199,7 @@ export function RoofPitchRafterCalculator({
       </div>
       <InContentMidCalculatorAd />
       <BomTable
+        calculator="roof-pitch"
         lines={[
           {
             item: "Architectural shingle bundles",

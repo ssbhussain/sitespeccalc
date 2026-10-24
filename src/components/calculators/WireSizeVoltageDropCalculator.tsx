@@ -10,12 +10,13 @@ import {
   FormulaPanel,
   MoneyField,
   NumberControl,
-  PrintButton,
   PrintSignoff,
+  QuoteShareActions,
   SelectControl,
   Stat,
 } from "@/components/calculators/shared";
 import { useUnits } from "@/context/UnitContext";
+import { choiceParam, flagParam, numberParam, useApplyQuery, usePublishSearchParams } from "@/hooks/useUrlSyncedState";
 import { formatQty } from "@/lib/engineering/format";
 import {
   CONDUIT_USD_PER_FT,
@@ -79,6 +80,27 @@ export function WireSizeVoltageDropCalculator({
   const [priceTouched, setPriceTouched] = useState(false);
   const [conduitUsd, setConduitUsd] = useState(CONDUIT_USD_PER_FT[initial.conduit]);
   const [conduitTouched, setConduitTouched] = useState(false);
+  const queryReady = useApplyQuery((params) => {
+    setSystem(choiceParam(params, "sys", initial.system, SYSTEMS.map((item) => item.value)));
+    setMaterial(choiceParam(params, "mat", initial.material, ["copper", "aluminum"] as const));
+    setAmps(numberParam(params, "amps", initial.amps));
+    setDistanceFt(numberParam(params, "dist", initial.distanceFt));
+    setMaxDropPct(numberParam(params, "drop", initial.maxDropPct));
+    setConduit(choiceParam(params, "conduit", initial.conduit, ["EMT", "PVC", "RMC", "LFMC"] as const));
+    setContinuous(flagParam(params, "cont", initial.continuous));
+  });
+  usePublishSearchParams(
+    {
+      amps,
+      dist: distanceFt,
+      drop: maxDropPct,
+      mat: material,
+      sys: system,
+      conduit,
+      cont: continuous ? 1 : 0,
+    },
+    queryReady,
+  );
 
   const inputs = useMemo<WireInputs>(
     () => ({ system, material, amps, distanceFt, maxDropPct, conduit, continuous, loadLabel }),
@@ -115,7 +137,9 @@ export function WireSizeVoltageDropCalculator({
     <div>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">K method · SSC-2026.1</p>
-        <PrintButton />
+        <QuoteShareActions
+          summary={`${formatQty(amps, 0)} A ${material} run, ${formatQty(distanceFt, 0)} ft. ${describe(result)}. Voltage drop ${formatQty(result.dropPct, 2)}%.`}
+        />
       </div>
       <div className="grid gap-6 lg:grid-cols-[300px_minmax(0,1fr)]">
         <form className="no-print space-y-4 rounded-xl border border-slate-700 bg-[#111c31] p-4">
@@ -226,6 +250,7 @@ export function WireSizeVoltageDropCalculator({
       </div>
       <InContentMidCalculatorAd />
       <BomTable
+        calculator="wire-size"
         lines={[
           {
             item: result.wire ? `${material} ${describe(result)}` : "Conductor",

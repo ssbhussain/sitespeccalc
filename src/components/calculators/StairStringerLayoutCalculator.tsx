@@ -10,12 +10,13 @@ import {
   FormulaPanel,
   MoneyField,
   NumberControl,
-  PrintButton,
   PrintSignoff,
+  QuoteShareActions,
   SelectControl,
   Stat,
 } from "@/components/calculators/shared";
 import { useUnits } from "@/context/UnitContext";
+import { choiceParam, numberParam, useApplyQuery, usePublishSearchParams } from "@/hooks/useUrlSyncedState";
 import { formatFeetInches, formatInches, formatMm, formatQty } from "@/lib/engineering/format";
 import { calculateStairs } from "@/lib/engineering/stairs";
 import type { Comparison, StairInputs, StringerMount } from "@/lib/types";
@@ -38,6 +39,17 @@ export function StairStringerLayoutCalculator({
   const [mount, setMount] = useState<StringerMount>(initial.mount);
   const [landingThicknessIn, setLandingThicknessIn] = useState(initial.landingThicknessIn);
   const [boardPrice, setBoardPrice] = useState(2.1);
+  const queryReady = useApplyQuery((params) => {
+    setTotalRiseIn(numberParam(params, "rise", initial.totalRiseIn));
+    setTargetRiseIn(numberParam(params, "target", initial.targetRiseIn));
+    setTreadIn(numberParam(params, "tread", initial.treadIn));
+    setWidthIn(numberParam(params, "width", initial.widthIn));
+    setMount(choiceParam(params, "mount", initial.mount, ["standard", "dropped"] as const));
+  });
+  usePublishSearchParams(
+    { rise: totalRiseIn, target: targetRiseIn, tread: treadIn, width: widthIn, mount },
+    queryReady,
+  );
 
   const inputs = useMemo<StairInputs>(
     () => ({ totalRiseIn, targetRiseIn, treadIn, widthIn, mount, landingThicknessIn }),
@@ -92,7 +104,9 @@ export function StairStringerLayoutCalculator({
         <p className={`rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] ${pass ? "border-emerald-500 text-emerald-300" : "border-amber-400 text-amber-200"}`}>
           {pass ? "IRC check pass" : "IRC check warning"}
         </p>
-        <PrintButton />
+        <QuoteShareActions
+          summary={`Stair spec: ${result.risers} risers at ${formatQty(result.riserIn, 3)} in, ${result.treads} treads at ${formatQty(treadIn, 2)} in, total rise ${formatQty(totalRiseIn, 1)} in.`}
+        />
       </div>
       <div className="grid gap-6 lg:grid-cols-[300px_minmax(0,1fr)]">
         <form className="no-print space-y-4 rounded-xl border border-slate-700 bg-[#111c31] p-4">
@@ -195,6 +209,7 @@ export function StairStringerLayoutCalculator({
       </div>
       <InContentMidCalculatorAd />
       <BomTable
+        calculator="stair-stringer"
         lines={[
           {
             item: stockLabel,

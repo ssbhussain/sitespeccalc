@@ -1,15 +1,54 @@
 import { config as loadEnv } from "dotenv";
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { createClient } from "@supabase/supabase-js";
 import OpenAI from "openai";
 import { PRESETS } from "../src/data/presets";
+import { FORMULA_VERSION } from "../src/lib/types";
 
 loadEnv({ path: ".env" });
 loadEnv({ path: ".env.local", override: true });
 
+const GENERATED_PATH = "src/data/generated-presets.json";
 const existing = new Set(PRESETS.map((preset) => preset.slug));
-const limit = Number(process.env.SEO_SEED_LIMIT ?? "520");
+const limit = readLimit();
 const dryRun = process.argv.includes("--dry-run");
+
+function readLimit() {
+  const flagged = process.argv.find((item) => item.startsWith("--batch="));
+  if (flagged) {
+    const value = Number(flagged.slice("--batch=".length));
+    if (Number.isFinite(value) && value > 0) return Math.floor(value);
+  }
+  const spaced = process.argv.indexOf("--batch");
+  if (spaced >= 0) {
+    const value = Number(process.argv[spaced + 1]);
+    if (Number.isFinite(value) && value > 0) return Math.floor(value);
+  }
+  const fromEnv = Number(process.env.SEO_SEED_LIMIT ?? "520");
+  return Number.isFinite(fromEnv) && fromEnv > 0 ? Math.floor(fromEnv) : 520;
+}
+
+function loadGeneratedSlugs() {
+  try {
+    const raw = JSON.parse(readFileSync(GENERATED_PATH, "utf8")) as unknown;
+    if (!Array.isArray(raw)) return;
+    for (const row of raw) {
+      if (row && typeof row === "object" && "slug" in row && typeof row.slug === "string") existing.add(row.slug);
+    }
+  } catch {
+    // A missing file means this is the first autopilot run.
+  }
+}
+
+loadGeneratedSlugs();
+
+const CALCULATOR_ID = {
+  "concrete-slab-rebar-calculator": "concrete-slab",
+  "wire-size-voltage-drop-calculator": "wire-size",
+  "stair-stringer-layout-calculator": "stair-stringer",
+  "roof-pitch-rafter-calculator": "roof-pitch",
+  "container-pallet-weight-calculator": "container-pallet",
+} as const;
 
 interface Seed {
   calculator_slug: string;
@@ -211,7 +250,34 @@ function buildSeeds(): Seed[] {
       }
     }
   }
-  return seeds.filter((seed) => !existing.has(seed.preset_slug)).slice(0, limit);
+  return takeAcrossCalculators(
+    seeds.filter((seed) => !existing.has(seed.preset_slug)),
+    limit,
+  );
+}
+
+function takeAcrossCalculators(seeds: Seed[], count: number) {
+  const groups = new Map<string, Seed[]>();
+  for (const seed of seeds) {
+    const list = groups.get(seed.calculator_slug) ?? [];
+    list.push(seed);
+    groups.set(seed.calculator_slug, list);
+  }
+  const picked: Seed[] = [];
+  let round = 0;
+  while (picked.length < count) {
+    let added = false;
+    for (const list of groups.values()) {
+      if (round < list.length) {
+        picked.push(list[round]);
+        added = true;
+        if (picked.length >= count) break;
+      }
+    }
+    if (!added) break;
+    round += 1;
+  }
+  return picked;
 }
 
 interface GeneratedCopy {
@@ -263,7 +329,67 @@ async function writeCopy(client: OpenAI, seed: Seed): Promise<GeneratedCopy> {
   };
 }
 
+async function rememberRemoteSlugs() {
+  const supabaseUrl = (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || "").trim();
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
+  if (!supabaseUrl || !serviceKey) return;
+  const supabase = createClient(supabaseUrl, serviceKey);
+  let from = 0;
+  while (true) {
+    const { data, error } = await supabase.from("programmatic_presets").select("preset_slug").range(from, from + 999);
+    if (error || !data?.length) break;
+    for (const row of data) {
+      if (typeof row.preset_slug === "string") existing.add(row.preset_slug);
+    }
+    if (data.length < 1000) break;
+    from += 1000;
+  }
+}
+
+function toPreset(seed: Seed, copy: GeneratedCopy) {
+  const meta = calculators.find((row) => row.slug === seed.calculator_slug);
+  const inputs = { ...seed.default_inputs };
+  const comparison = inputs.comparison;
+  delete inputs.comparison;
+  return {
+    calculator: CALCULATOR_ID[seed.calculator_slug as keyof typeof CALCULATOR_ID],
+    calculatorSlug: seed.calculator_slug,
+    cluster: meta?.cluster,
+    slug: seed.preset_slug,
+    h1: seed.h1_title,
+    metaTitle: copy.meta_title,
+    metaDescription: copy.meta_description,
+    summary: copy.meta_description,
+    engineeringNotesHtml: copy.engineering_notes_html,
+    codeReference: copy.code_compliance_reference,
+    faqs: copy.faqs,
+    formulaVersion: FORMULA_VERSION,
+    defaultInputs: inputs,
+    comparison,
+  };
+}
+
+function appendGenerated(presets: ReturnType<typeof toPreset>[]) {
+  let current: unknown[] = [];
+  try {
+    const raw = JSON.parse(readFileSync(GENERATED_PATH, "utf8")) as unknown;
+    if (Array.isArray(raw)) current = raw;
+  } catch {
+    current = [];
+  }
+  const map = new Map<string, unknown>();
+  for (const row of current) {
+    if (row && typeof row === "object" && "slug" in row && typeof row.slug === "string") map.set(row.slug, row);
+  }
+  for (const preset of presets) {
+    map.set(preset.slug, preset);
+    existing.add(preset.slug);
+  }
+  writeFileSync(GENERATED_PATH, `${JSON.stringify([...map.values()], null, 2)}\n`);
+}
+
 async function main() {
+  await rememberRemoteSlugs();
   const seeds = buildSeeds();
   if (dryRun) {
     mkdirSync("scripts/output", { recursive: true });
@@ -331,6 +457,13 @@ async function main() {
     );
     const { error } = await supabase.from("programmatic_presets").upsert(rows, { onConflict: "preset_slug" });
     if (error) throw error;
+    appendGenerated(batch.map((seed, index) => toPreset(seed, {
+      meta_title: rows[index].meta_title,
+      meta_description: rows[index].meta_description,
+      engineering_notes_html: rows[index].engineering_notes_html,
+      code_compliance_reference: rows[index].code_compliance_reference,
+      faqs: rows[index].faqs,
+    })));
     written += rows.length;
     console.log(`Upserted ${written} / ${seeds.length}`);
     await sleep(1500);

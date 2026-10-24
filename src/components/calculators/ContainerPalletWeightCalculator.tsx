@@ -10,12 +10,13 @@ import {
   FormulaPanel,
   MoneyField,
   NumberControl,
-  PrintButton,
   PrintSignoff,
+  QuoteShareActions,
   SelectControl,
   Stat,
 } from "@/components/calculators/shared";
 import { LB_TO_KG, useUnits } from "@/context/UnitContext";
+import { choiceParam, flagParam, numberParam, useApplyQuery, usePublishSearchParams } from "@/hooks/useUrlSyncedState";
 import { CONTAINERS, calculateContainer } from "@/lib/engineering/container";
 import { formatQty } from "@/lib/engineering/format";
 import type { Comparison, ContainerId, ContainerInputs, FreightRateBasis, PalletStandard } from "@/lib/types";
@@ -49,6 +50,27 @@ export function ContainerPalletWeightCalculator({
   const [stackable, setStackable] = useState(initial.stackable);
   const [rateBasis, setRateBasis] = useState<FreightRateBasis>(initial.rateBasis);
   const [rateUsd, setRateUsd] = useState(initial.rateUsd);
+  const queryReady = useApplyQuery((params) => {
+    setContainer(choiceParam(params, "ctn", initial.container, ["20ft", "40ft", "40hc", "53ft"] as const));
+    setPallet(choiceParam(params, "pal", initial.pallet, ["gma", "epal", "uk", "custom"] as const));
+    setBoxLengthIn(numberParam(params, "boxL", initial.boxLengthIn));
+    setBoxWidthIn(numberParam(params, "boxW", initial.boxWidthIn));
+    setBoxHeightIn(numberParam(params, "boxH", initial.boxHeightIn));
+    setBoxWeightLb(numberParam(params, "boxWt", initial.boxWeightLb));
+    setStackable(flagParam(params, "stack", initial.stackable));
+  });
+  usePublishSearchParams(
+    {
+      ctn: container,
+      pal: pallet,
+      boxL: boxLengthIn,
+      boxW: boxWidthIn,
+      boxH: boxHeightIn,
+      boxWt: boxWeightLb,
+      stack: stackable ? 1 : 0,
+    },
+    queryReady,
+  );
 
   const inputs = useMemo<ContainerInputs>(
     () => ({
@@ -85,7 +107,9 @@ export function ContainerPalletWeightCalculator({
     <div>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">Floor grid · SSC-2026.1</p>
-        <PrintButton />
+        <QuoteShareActions
+          summary={`Freight spec: ${result.spec.label}, ${result.totalPallets} ${result.palletLabel} pallets, ${formatQty(result.cargoCbm, 2)} m³, ${formatQty(result.totalKg, 0)} kg.`}
+        />
       </div>
       <div className="grid gap-6 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)]">
         <form className="space-y-4" onSubmit={(event) => event.preventDefault()}>
@@ -188,6 +212,7 @@ export function ContainerPalletWeightCalculator({
       </div>
       <InContentMidCalculatorAd />
       <BomTable
+        calculator="container-pallet"
         lines={[
           {
             item: `${result.palletLabel} pallets`,

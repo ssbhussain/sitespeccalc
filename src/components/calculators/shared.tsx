@@ -1,10 +1,12 @@
 "use client";
 
 import { Printer } from "lucide-react";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
+import { HighTicketOfferCard } from "@/components/HighTicketOfferCard";
 import { MaterialAffiliateRow } from "@/components/MaterialAffiliateRow";
 import { asNumber } from "@/lib/engineering/format";
 import { useUnits } from "@/context/UnitContext";
+import type { CalculatorId } from "@/lib/types";
 
 export function PrintButton() {
   return (
@@ -16,6 +18,57 @@ export function PrintButton() {
       <Printer size={18} aria-hidden="true" />
       Print / Save Jobsite Spec Sheet & Shopping List (PDF)
     </button>
+  );
+}
+
+export function QuoteShareActions({ summary }: { summary: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function copyLink() {
+    const url = window.location.href;
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      const input = document.createElement("textarea");
+      input.value = url;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand("copy");
+      input.remove();
+    }
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 2500);
+  }
+
+  function sendSpec() {
+    const url = window.location.href;
+    const text = `${summary}\n\nReview the full spec on SiteSpecCalc.com:\n${url}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
+  }
+
+  return (
+    <div className="no-print flex flex-wrap items-center gap-2">
+      <PrintButton />
+      <button
+        type="button"
+        onClick={copyLink}
+        className="inline-flex items-center rounded-md border border-amber-400/70 px-4 py-3 text-sm font-bold text-amber-100 hover:bg-amber-400 hover:text-slate-950"
+      >
+        Copy Shareable Quote Link
+      </button>
+      <button
+        type="button"
+        onClick={sendSpec}
+        className="inline-flex items-center rounded-md border border-slate-500 px-4 py-3 text-sm font-bold text-slate-100 hover:border-amber-300"
+      >
+        Send Spec via WhatsApp / SMS
+      </button>
+      {copied ? (
+        <span role="status" className="fixed bottom-4 right-4 z-50 rounded-lg bg-slate-950 px-4 py-3 text-sm font-semibold text-emerald-200 shadow-lg">
+          Link copied
+        </span>
+      ) : null}
+    </div>
   );
 }
 
@@ -180,8 +233,9 @@ export interface BomLine {
   search: string;
 }
 
-export function BomTable({ lines }: { lines: BomLine[] }) {
+export function BomTable({ lines, calculator }: { lines: BomLine[]; calculator: CalculatorId }) {
   return (
+    <div>
     <div className="overflow-x-auto rounded-xl border border-slate-700">
       <table className="spec-table w-full min-w-[920px] border-collapse text-left text-sm">
         <caption className="px-3 py-3 text-left font-display text-xl font-semibold text-slate-50">
@@ -217,6 +271,8 @@ export function BomTable({ lines }: { lines: BomLine[] }) {
       <p className="px-3 py-3 text-xs leading-5 text-slate-400">
         Source links open a product search on the Amazon storefront for the selected currency. SiteSpecCalc may earn a commission. The link does not change the quantities above.
       </p>
+    </div>
+    <HighTicketOfferCard calculator={calculator} />
     </div>
   );
 }

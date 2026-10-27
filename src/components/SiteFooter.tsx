@@ -18,7 +18,7 @@ export function SiteFooter() {
             <li><Link className="hover:text-amber-300" href="/calculators/electrical-solar/wire-size-voltage-drop-calculator">Wire and voltage drop</Link></li>
             <li><Link className="hover:text-amber-300" href="/calculators/framing-roofing/stair-stringer-layout-calculator">Stair stringers</Link></li>
             <li><Link className="hover:text-amber-300" href="/calculators/framing-roofing/roof-pitch-rafter-calculator">Roof pitch and rafters</Link></li>
-            <li><Link className="hover:text-amber-300" href="/calculators/freight-logistics/container-pallet-weight-calculator">Container and pallet load</Link></li>
+            <li><Link className="hover:text-amber-300" href="/calculators/freight-logistics/container-pallet-weight-calculator">Container, Pallet & CBM Visualizer</Link></li>
           </ul>
         </div>
         <div>
@@ -30,7 +30,7 @@ export function SiteFooter() {
             <li><Link className="hover:text-amber-300" href="/calculators/freight-logistics">Freight and logistics</Link></li>
           </ul>
         </div>
-        <div>
+        <div data-nosnippet="">
           <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-300">Trust</h2>
           <ul className="mt-3 space-y-2 text-sm text-slate-400">
             <li><Link className="hover:text-amber-300" href="/about">About the formulas</Link></li>
@@ -41,7 +41,7 @@ export function SiteFooter() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-slate-800 px-4 py-4 text-center text-sm">
+      <div className="border-t border-slate-800 px-4 py-4 text-center text-sm" data-nosnippet="">
         <Link href="/directory" className="font-semibold text-amber-200 hover:text-amber-300">
           All 120+ Engineering Specs & Calculators
         </Link>

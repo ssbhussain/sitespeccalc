@@ -25,7 +25,7 @@ function AdUnit({ slotId, className }: { slotId?: string; className?: string }) 
   if (!slotId || !ADSENSE_CLIENT) return null;
 
   return (
-    <div className={`ad-slot-wrapper ${className ?? ""}`}>
+    <div className={`ad-slot-wrapper ${className ?? ""}`} data-nosnippet="">
       <ins
         className="adsbygoogle"
         style={{ display: "block" }}

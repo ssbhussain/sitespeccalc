@@ -938,5 +938,947 @@
         "53ft"
       ]
     }
+  },
+  {
+    "calculator": "concrete-slab",
+    "calculatorSlug": "concrete-slab-rebar-calculator",
+    "cluster": "concrete-masonry",
+    "slug": "generated-18x20-slab-4-inch",
+    "h1": "18 by 20 ft slab at 4 inches",
+    "metaTitle": "Residential Slab Design Calculator - IRC R506 Compliance",
+    "metaDescription": "Calculate the requirements for a residential slab measuring 18 ft by 20 ft at 4 in thickness with #4 bars at 18 in spacing. Ensure compliance with IRC R506 standards.",
+    "summary": "Calculate the requirements for a residential slab measuring 18 ft by 20 ft at 4 in thickness with #4 bars at 18 in spacing. Ensure compliance with IRC R506 standards.",
+    "engineeringNotesHtml": "<p>This calculator assists in determining the specifications for a residential slab that measures 18 ft by 20 ft with a thickness of 4 inches. The design incorporates #4 rebar spaced at 18 inches on center, ensuring structural integrity and compliance with IRC R506 guidelines.</p><p>Note that soil design considerations are excluded from this calculation. It is essential to evaluate the soil conditions separately to ensure proper support for the slab.</p>",
+    "codeReference": "IRC R506",
+    "faqs": [
+      {
+        "question": "What is the purpose of using #4 bars in the slab?",
+        "answer": "Using #4 bars provides reinforcement to the concrete slab, helping to control cracking and improve load-bearing capacity."
+      },
+      {
+        "question": "Why is soil design excluded from this calculation?",
+        "answer": "Soil design is excluded because it requires a separate evaluation based on specific site conditions, which can vary significantly."
+      },
+      {
+        "question": "What does IRC R506 cover?",
+        "answer": "IRC R506 provides guidelines for the design and construction of concrete slabs on grade, ensuring they meet safety and performance standards."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "lengthFt": 18,
+      "widthFt": 20,
+      "thicknessIn": 4,
+      "thickenedEdge": false,
+      "footingWidthIn": 12,
+      "footingDepthIn": 12,
+      "rebarSize": "4",
+      "spacingIn": 18,
+      "psi": 4000,
+      "waste": 0.1,
+      "readyMixPerYd3": 165,
+      "bag80Price": 6.75,
+      "bag60Price": 5.4
+    },
+    "comparison": {
+      "kind": "thickness",
+      "inches": [
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "calculator": "wire-size",
+    "calculatorSlug": "wire-size-voltage-drop-calculator",
+    "cluster": "electrical-solar",
+    "slug": "generated-20a-150ft-copper-voltage-drop",
+    "h1": "20 amp copper run at 150 feet",
+    "metaTitle": "Understanding 3% Voltage Drop for 240V Copper Branch Circuits",
+    "metaDescription": "Learn about the 3% voltage drop rule in the NEC for 240V copper branch circuits at 20A over 150 ft, and understand why derating is excluded.",
+    "summary": "Learn about the 3% voltage drop rule in the NEC for 240V copper branch circuits at 20A over 150 ft, and understand why derating is excluded.",
+    "engineeringNotesHtml": "<p>The National Electrical Code (NEC) recommends a maximum voltage drop of 3% for branch circuits to ensure efficient operation of electrical equipment. For a 240V copper branch circuit at 20A over a distance of 150 ft, this means that the voltage drop should not exceed 7.2 volts (3% of 240V). This guideline helps maintain performance and safety in electrical installations.</p><p>It's important to note that derating due to ambient temperature or other factors is not considered in this calculation. The 3% rule is strictly about maintaining voltage levels to prevent equipment malfunction and ensure energy efficiency.</p>",
+    "codeReference": "Refer to NEC Article 210.19(A)(1) for branch circuits and the informational note regarding voltage drop.",
+    "faqs": [
+      {
+        "question": "What is the significance of the 3% voltage drop rule?",
+        "answer": "The 3% voltage drop rule helps ensure that electrical equipment operates efficiently and safely, preventing performance issues due to insufficient voltage."
+      },
+      {
+        "question": "Why is derating excluded from the 3% voltage drop calculation?",
+        "answer": "Derating is excluded because the 3% voltage drop rule specifically addresses the maximum allowable drop for efficient operation, independent of other factors like temperature or conduit fill."
+      },
+      {
+        "question": "How do I calculate the voltage drop for my circuit?",
+        "answer": "To calculate voltage drop, you can use the formula: Voltage Drop (V) = (2 * Length of Circuit (ft) * Current (A) * Resistance of Wire (Ω/ft)). For copper wire, refer to standard resistance values based on wire gauge."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "system": "1ph-240",
+      "material": "copper",
+      "amps": 20,
+      "distanceFt": 150,
+      "maxDropPct": 3,
+      "conduit": "EMT",
+      "continuous": false,
+      "loadLabel": "Branch circuit"
+    },
+    "comparison": {
+      "kind": "distance",
+      "feet": [
+        150,
+        175
+      ]
+    }
+  },
+  {
+    "calculator": "stair-stringer",
+    "calculatorSlug": "stair-stringer-layout-calculator",
+    "cluster": "framing-roofing",
+    "slug": "generated-stair-96-inch-rise",
+    "h1": "Stair layout for a 96 inch rise",
+    "metaTitle": "Stair Design Calculator for 96 Inch Total Rise",
+    "metaDescription": "Calculate stair dimensions for a 96 inch total rise while adhering to IRC guidelines of 7.75 inch riser and 10 inch tread limits. Ensure compliance for safe and functional stairways.",
+    "summary": "Calculate stair dimensions for a 96 inch total rise while adhering to IRC guidelines of 7.75 inch riser and 10 inch tread limits. Ensure compliance for safe and functional stairways.",
+    "engineeringNotesHtml": "<p>When designing stairs with a total rise of 96 inches, it is essential to adhere to the International Residential Code (IRC) guidelines. The maximum riser height allowed is 7.75 inches, and the minimum tread depth is 10 inches. This ensures safety and comfort for users.</p><p>Headroom is not calculated in this design, but it is crucial to ensure that there is adequate clearance above the stairs for safe passage.</p>",
+    "codeReference": "IRC guidelines for stair design",
+    "faqs": [
+      {
+        "question": "What is the maximum riser height allowed by the IRC?",
+        "answer": "The maximum riser height allowed by the IRC is 7.75 inches."
+      },
+      {
+        "question": "What is the minimum tread depth required for stairs?",
+        "answer": "The minimum tread depth required for stairs is 10 inches according to IRC guidelines."
+      },
+      {
+        "question": "Is headroom included in the stair design calculations?",
+        "answer": "No, headroom is not calculated in the stair design, but it is important to ensure adequate clearance above the stairs."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "totalRiseIn": 96,
+      "targetRiseIn": 7.5,
+      "treadIn": 10.5,
+      "widthIn": 36,
+      "mount": "standard",
+      "landingThicknessIn": 1
+    },
+    "comparison": {
+      "kind": "target-rise",
+      "inches": [
+        7,
+        7.5,
+        7.75
+      ]
+    }
+  },
+  {
+    "calculator": "roof-pitch",
+    "calculatorSlug": "roof-pitch-rafter-calculator",
+    "cluster": "framing-roofing",
+    "slug": "generated-7-12-gable-16ft-span",
+    "h1": "7/12 gable rafter on a 16 ft span",
+    "metaTitle": "Understanding Gable Roofs: 7/12 Pitch and Span Calculations",
+    "metaDescription": "Learn about gable roofs with a 7/12 pitch, including key concepts like multipliers, plumb cuts, and considerations for snow load sizing.",
+    "summary": "Learn about gable roofs with a 7/12 pitch, including key concepts like multipliers, plumb cuts, and considerations for snow load sizing.",
+    "engineeringNotesHtml": "<p>A gable roof with a 7/12 pitch means that for every 12 horizontal units, the roof rises 7 vertical units. This pitch affects the overall height and design of the roof structure.</p><p>The multiplier is a factor used to calculate various dimensions related to the roof's slope, such as the total rise and the length of rafters. The plumb cut refers to the angled cut made at the top of the rafter, which allows it to fit snugly against the ridge board. It's important to note that snow load considerations are not included in this basic sizing discussion and should be evaluated separately based on local building codes and environmental conditions.</p>",
+    "codeReference": "Consult local building codes for specific requirements regarding snow load and structural integrity.",
+    "faqs": [
+      {
+        "question": "What is a 7/12 pitch in roofing?",
+        "answer": "A 7/12 pitch means that for every 12 horizontal units, the roof rises 7 vertical units, creating a slope that is approximately 30 degrees."
+      },
+      {
+        "question": "What is a multiplier in roof calculations?",
+        "answer": "A multiplier is a numerical factor used to determine dimensions related to the roof's slope, such as calculating the rise or the length of rafters based on the pitch."
+      },
+      {
+        "question": "What is a plumb cut?",
+        "answer": "A plumb cut is an angled cut made at the top of a rafter, allowing it to fit properly against the ridge board of the roof."
+      },
+      {
+        "question": "Why is snow load not sized in this explanation?",
+        "answer": "Snow load sizing is not included in this basic discussion and should be evaluated separately based on local building codes and environmental conditions."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "spanFt": 16,
+      "lengthFt": 24,
+      "pitchRise": 7,
+      "overhangFt": 1,
+      "ridgeIn": 1.5,
+      "style": "gable"
+    },
+    "comparison": {
+      "kind": "pitch",
+      "risePer12": [
+        7,
+        9
+      ]
+    }
+  },
+  {
+    "calculator": "container-pallet",
+    "calculatorSlug": "container-pallet-weight-calculator",
+    "cluster": "freight-logistics",
+    "slug": "generated-20ft-uk-single-load",
+    "h1": "20ft uk pallet load",
+    "metaTitle": "20ft Container Load Calculation with UK Pallets",
+    "metaDescription": "Learn about the dimensional weight and payload limits for 20ft containers using UK pallets. Understand the implications of floor slots and stacking restrictions.",
+    "summary": "Learn about the dimensional weight and payload limits for 20ft containers using UK pallets. Understand the implications of floor slots and stacking restrictions.",
+    "engineeringNotesHtml": "<p>When loading a 20ft container with UK pallets, it's essential to consider the dimensional weight, which is calculated at 167 kg per cubic meter. This means that the space occupied by the pallets will affect the overall weight calculation, even if the actual weight is lower.</p><p>Additionally, since the pallets are not stackable, the arrangement must be planned carefully to maximize the use of space while adhering to the container's payload limit. The payload limit is a planning figure and should be treated as such, ensuring that the total weight of the cargo does not exceed the container's maximum capacity.</p>",
+    "codeReference": "Refer to the relevant shipping and cargo handling regulations for guidance on payload limits and loading practices.",
+    "faqs": [
+      {
+        "question": "What are floor slots in a container?",
+        "answer": "Floor slots are designated areas within a container that allow for the secure placement of cargo, ensuring stability during transport. They are particularly important when dealing with non-stackable items like UK pallets."
+      },
+      {
+        "question": "How is dimensional weight calculated?",
+        "answer": "Dimensional weight is calculated by taking the volume of the cargo in cubic meters and multiplying it by a specific weight factor, which in this case is 167 kg per cubic meter. This helps determine the shipping cost based on the space occupied rather than just the actual weight."
+      },
+      {
+        "question": "What does it mean that the payload limit is a planning figure?",
+        "answer": "The payload limit being a planning figure means that it serves as a guideline for how much weight can be safely loaded into the container. It is important to consider this limit to avoid overloading and ensure safe transport."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "container": "20ft",
+      "pallet": "uk",
+      "customPalletLengthIn": 48,
+      "customPalletWidthIn": 40,
+      "boxLengthIn": 16,
+      "boxWidthIn": 12,
+      "boxHeightIn": 12,
+      "boxWeightLb": 30,
+      "stackable": false,
+      "rateBasis": "cbm",
+      "rateUsd": 85
+    },
+    "comparison": {
+      "kind": "container",
+      "ids": [
+        "20ft",
+        "40ft",
+        "40hc",
+        "53ft"
+      ]
+    }
+  },
+  {
+    "calculator": "concrete-slab",
+    "calculatorSlug": "concrete-slab-rebar-calculator",
+    "cluster": "concrete-masonry",
+    "slug": "generated-18x20-slab-5-inch",
+    "h1": "18 by 20 ft slab at 5 inches",
+    "metaTitle": "Residential Slab Design Calculator - IRC R506 Compliance",
+    "metaDescription": "Calculate the specifications for your residential slab with our easy-to-use calculator. Designed for slabs 18 ft by 20 ft at 5 in thickness with #4 bars at 18 in spacing, compliant with IRC R506.",
+    "summary": "Calculate the specifications for your residential slab with our easy-to-use calculator. Designed for slabs 18 ft by 20 ft at 5 in thickness with #4 bars at 18 in spacing, compliant with IRC R506.",
+    "engineeringNotesHtml": "<p>This calculator is designed for a residential slab measuring 18 ft by 20 ft with a thickness of 5 inches, utilizing #4 rebar spaced at 18 inches on center. Please note that soil design considerations are excluded from this calculation.</p><p>Ensure compliance with IRC R506 for proper reinforcement and construction practices to achieve a durable and safe slab.</p>",
+    "codeReference": "IRC R506",
+    "faqs": [
+      {
+        "question": "What is the purpose of using #4 bars in the slab?",
+        "answer": "The #4 bars provide reinforcement to the concrete slab, helping to control cracking and improve structural integrity."
+      },
+      {
+        "question": "Why is soil design excluded from this calculation?",
+        "answer": "Soil design is a complex aspect that depends on various factors such as soil type, load-bearing capacity, and moisture content, which are not covered in this calculator."
+      },
+      {
+        "question": "What does IRC R506 cover?",
+        "answer": "IRC R506 covers the requirements for concrete slabs, including reinforcement, thickness, and construction practices to ensure safety and durability."
+      },
+      {
+        "question": "Can I use this calculator for slabs of different sizes?",
+        "answer": "This calculator is specifically designed for an 18 ft by 20 ft slab. For different sizes, adjustments to the calculations would be necessary."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "lengthFt": 18,
+      "widthFt": 20,
+      "thicknessIn": 5,
+      "thickenedEdge": false,
+      "footingWidthIn": 12,
+      "footingDepthIn": 12,
+      "rebarSize": "4",
+      "spacingIn": 18,
+      "psi": 4000,
+      "waste": 0.1,
+      "readyMixPerYd3": 165,
+      "bag80Price": 6.75,
+      "bag60Price": 5.4
+    },
+    "comparison": {
+      "kind": "thickness",
+      "inches": [
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "calculator": "wire-size",
+    "calculatorSlug": "wire-size-voltage-drop-calculator",
+    "cluster": "electrical-solar",
+    "slug": "generated-30a-40ft-copper-voltage-drop",
+    "h1": "30 amp copper run at 40 feet",
+    "metaTitle": "240V Copper Branch or Feeder at 30A - NEC 3% Rule Explained",
+    "metaDescription": "Learn about the 3% NEC informational note regarding voltage drop for 240V copper branch or feeder circuits at 30A over 40 ft, and understand why derating does not apply.",
+    "summary": "Learn about the 3% NEC informational note regarding voltage drop for 240V copper branch or feeder circuits at 30A over 40 ft, and understand why derating does not apply.",
+    "engineeringNotesHtml": "<p>The National Electrical Code (NEC) provides guidelines for maintaining voltage drop within acceptable limits to ensure efficient operation of electrical systems. For a 240V copper branch or feeder circuit operating at 30A over a distance of 40 ft, the NEC suggests that the voltage drop should not exceed 3% of the nominal voltage.</p><p>This means that for a 240V circuit, the maximum allowable voltage drop is 7.2 volts (3% of 240V). However, it is important to note that derating factors, which may apply to certain conditions such as ambient temperature or conduit fill, do not apply in this context when calculating voltage drop for a standard installation.</p>",
+    "codeReference": "Refer to NEC Article 310 for conductor sizing and NEC Article 215 for branch circuits.",
+    "faqs": [
+      {
+        "question": "What is the 3% rule in the NEC?",
+        "answer": "The 3% rule in the NEC refers to the recommendation that voltage drop in branch circuits should not exceed 3% of the nominal voltage to ensure efficient operation."
+      },
+      {
+        "question": "Why is derating excluded when calculating voltage drop?",
+        "answer": "Derating is excluded in voltage drop calculations because the 3% rule focuses on maintaining voltage levels for performance rather than adjusting for factors like temperature or conduit fill."
+      },
+      {
+        "question": "How do I calculate the voltage drop for my circuit?",
+        "answer": "To calculate voltage drop, use the formula: Voltage Drop (V) = (2 × Length of Circuit (ft) × Current (A) × Resistance of Conductor (Ω/ft)). For copper conductors, you can find resistance values in NEC tables."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "system": "1ph-240",
+      "material": "copper",
+      "amps": 30,
+      "distanceFt": 40,
+      "maxDropPct": 3,
+      "conduit": "EMT",
+      "continuous": false,
+      "loadLabel": "Branch circuit"
+    },
+    "comparison": {
+      "kind": "distance",
+      "feet": [
+        40,
+        65
+      ]
+    }
+  },
+  {
+    "calculator": "stair-stringer",
+    "calculatorSlug": "stair-stringer-layout-calculator",
+    "cluster": "framing-roofing",
+    "slug": "generated-stair-120-inch-rise",
+    "h1": "Stair layout for a 120 inch rise",
+    "metaTitle": "Stair Design Calculator for 120 Inch Total Rise",
+    "metaDescription": "Calculate your stair design with a total rise of 120 inches, adhering to IRC guidelines of 7.75 inch risers and 10 inch treads. Ensure safety and compliance in your construction project.",
+    "summary": "Calculate your stair design with a total rise of 120 inches, adhering to IRC guidelines of 7.75 inch risers and 10 inch treads. Ensure safety and compliance in your construction project.",
+    "engineeringNotesHtml": "<p>When designing a stair with a total rise of 120 inches, you must adhere to the International Residential Code (IRC) guidelines, which stipulate a maximum riser height of 7.75 inches and a minimum tread depth of 10 inches. This ensures safety and accessibility in residential staircases.</p><p>It's important to note that headroom is not calculated in this design, but it should still be considered to meet safety standards.</p>",
+    "codeReference": "IRC guidelines for stair design",
+    "faqs": [
+      {
+        "question": "What is the maximum riser height allowed by IRC?",
+        "answer": "The maximum riser height allowed by the IRC is 7.75 inches."
+      },
+      {
+        "question": "What is the minimum tread depth required for stairs?",
+        "answer": "The minimum tread depth required for stairs according to the IRC is 10 inches."
+      },
+      {
+        "question": "Is headroom calculated in stair design?",
+        "answer": "No, headroom is not calculated in the stair design, but it should be considered for safety."
+      },
+      {
+        "question": "How do I calculate the number of risers for a 120 inch total rise?",
+        "answer": "To calculate the number of risers, divide the total rise (120 inches) by the maximum riser height (7.75 inches). This gives you approximately 15.48, so you would round up to 16 risers."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "totalRiseIn": 120,
+      "targetRiseIn": 7.5,
+      "treadIn": 10.5,
+      "widthIn": 36,
+      "mount": "standard",
+      "landingThicknessIn": 1
+    },
+    "comparison": {
+      "kind": "target-rise",
+      "inches": [
+        7,
+        7.5,
+        7.75
+      ]
+    }
+  },
+  {
+    "calculator": "roof-pitch",
+    "calculatorSlug": "roof-pitch-rafter-calculator",
+    "cluster": "framing-roofing",
+    "slug": "generated-8-12-gable-16ft-span",
+    "h1": "8/12 gable rafter on a 16 ft span",
+    "metaTitle": "Understanding Gable Roof Design: Key Concepts Explained",
+    "metaDescription": "Learn about gable roof design, including the multiplier, plumb cut, and considerations for snow load. Essential information for construction calculations.",
+    "summary": "Learn about gable roof design, including the multiplier, plumb cut, and considerations for snow load. Essential information for construction calculations.",
+    "engineeringNotesHtml": "<p>A gable roof with an 8/12 pitch on a 16 ft span requires careful calculations to ensure structural integrity. The multiplier is a crucial factor in determining the rise of the roof based on the span, while the plumb cut is the angle cut at the top of the rafters to fit the roof's slope. It's important to note that snow load considerations should be addressed separately and are not included in this basic sizing.</p><p>When designing a gable roof, always consult local building codes and regulations to ensure compliance with safety standards.</p>",
+    "codeReference": "Consult local building codes for specific requirements regarding roof design and load calculations.",
+    "faqs": [
+      {
+        "question": "What is a multiplier in roof design?",
+        "answer": "The multiplier is used to calculate the rise of the roof based on the pitch and span. For an 8/12 pitch, the multiplier helps determine the vertical rise over the horizontal span."
+      },
+      {
+        "question": "What is a plumb cut?",
+        "answer": "A plumb cut is the angled cut made at the top of the rafters to ensure they fit snugly against the ridge board, aligning with the slope of the roof."
+      },
+      {
+        "question": "Why is snow load not sized in this calculation?",
+        "answer": "Snow load is a separate consideration that depends on local climate conditions and should be calculated according to local building codes and standards."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "spanFt": 16,
+      "lengthFt": 24,
+      "pitchRise": 8,
+      "overhangFt": 1,
+      "ridgeIn": 1.5,
+      "style": "gable"
+    },
+    "comparison": {
+      "kind": "pitch",
+      "risePer12": [
+        8,
+        10
+      ]
+    }
+  },
+  {
+    "calculator": "container-pallet",
+    "calculatorSlug": "container-pallet-weight-calculator",
+    "cluster": "freight-logistics",
+    "slug": "generated-20ft-uk-stacked-load",
+    "h1": "20ft uk pallet load, stacked",
+    "metaTitle": "20ft Container Load Calculation with UK Pallets",
+    "metaDescription": "Discover how to efficiently load a 20ft container with UK pallets, understanding floor slots, dimensional weight, and payload limits for optimal planning.",
+    "summary": "Discover how to efficiently load a 20ft container with UK pallets, understanding floor slots, dimensional weight, and payload limits for optimal planning.",
+    "engineeringNotesHtml": "<p>When loading a 20ft container with UK pallets, it's essential to consider the floor slots designed for stacking. These slots help distribute the weight evenly and maximize space utilization. Each pallet should be positioned to align with these slots to ensure stability during transport.</p><p>Additionally, the dimensional weight of 167 kg per cubic meter must be factored into your calculations. This figure represents the volumetric weight of the cargo and is crucial for determining shipping costs and weight limits. Remember, the payload limit is a planning figure and should be adhered to for safety and compliance.</p>",
+    "codeReference": "Refer to the relevant shipping and cargo handling regulations for safe loading practices.",
+    "faqs": [
+      {
+        "question": "What are floor slots in a 20ft container?",
+        "answer": "Floor slots are designated areas within the container designed to accommodate pallets securely. They help in distributing weight evenly and maximizing the use of space."
+      },
+      {
+        "question": "What does 167 kg per cubic meter mean?",
+        "answer": "167 kg per cubic meter is the dimensional weight of the cargo, which is used to calculate shipping costs based on volume rather than just weight."
+      },
+      {
+        "question": "What is the payload limit for a 20ft container?",
+        "answer": "The payload limit is a planning figure that indicates the maximum weight the container can safely carry. It is important to adhere to this limit for safety and compliance."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "container": "20ft",
+      "pallet": "uk",
+      "customPalletLengthIn": 48,
+      "customPalletWidthIn": 40,
+      "boxLengthIn": 16,
+      "boxWidthIn": 12,
+      "boxHeightIn": 12,
+      "boxWeightLb": 30,
+      "stackable": true,
+      "rateBasis": "cbm",
+      "rateUsd": 85
+    },
+    "comparison": {
+      "kind": "container",
+      "ids": [
+        "20ft",
+        "40ft",
+        "40hc",
+        "53ft"
+      ]
+    }
+  },
+  {
+    "calculator": "concrete-slab",
+    "calculatorSlug": "concrete-slab-rebar-calculator",
+    "cluster": "concrete-masonry",
+    "slug": "generated-18x20-slab-6-inch",
+    "h1": "18 by 20 ft slab at 6 inches",
+    "metaTitle": "Residential Slab Design Calculator - IRC R506 Compliance",
+    "metaDescription": "Calculate the specifications for a residential slab measuring 18 ft by 20 ft at 6 in thickness with #4 bars at 18 in spacing. Ensure compliance with IRC R506 standards.",
+    "summary": "Calculate the specifications for a residential slab measuring 18 ft by 20 ft at 6 in thickness with #4 bars at 18 in spacing. Ensure compliance with IRC R506 standards.",
+    "engineeringNotesHtml": "<p>This calculator is designed to help you determine the specifications for a residential slab measuring 18 ft by 20 ft with a thickness of 6 inches. The design includes #4 rebar spaced at 18 inches on center, which is crucial for structural integrity.</p><p>Please note that soil design considerations are excluded from this calculation. Always consult a licensed engineer for site-specific soil conditions and compliance with local codes.</p>",
+    "codeReference": "IRC R506",
+    "faqs": [
+      {
+        "question": "What is the purpose of using #4 bars in the slab?",
+        "answer": "Using #4 bars provides reinforcement to the concrete slab, helping to control cracking and improve load-bearing capacity."
+      },
+      {
+        "question": "Why is soil design excluded from this calculation?",
+        "answer": "Soil design is site-specific and depends on various factors such as soil type and load-bearing capacity, which are not covered in this calculator."
+      },
+      {
+        "question": "What does IRC R506 cover?",
+        "answer": "IRC R506 provides guidelines for the design and construction of concrete slabs on grade, ensuring they meet safety and performance standards."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "lengthFt": 18,
+      "widthFt": 20,
+      "thicknessIn": 6,
+      "thickenedEdge": true,
+      "footingWidthIn": 12,
+      "footingDepthIn": 12,
+      "rebarSize": "4",
+      "spacingIn": 18,
+      "psi": 4000,
+      "waste": 0.1,
+      "readyMixPerYd3": 165,
+      "bag80Price": 6.75,
+      "bag60Price": 5.4
+    },
+    "comparison": {
+      "kind": "thickness",
+      "inches": [
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "calculator": "wire-size",
+    "calculatorSlug": "wire-size-voltage-drop-calculator",
+    "cluster": "electrical-solar",
+    "slug": "generated-30a-60ft-copper-voltage-drop",
+    "h1": "30 amp copper run at 60 feet",
+    "metaTitle": "Understanding 3% NEC Informational Note for 240V Copper Branch Circuits",
+    "metaDescription": "Learn about the 3% NEC informational note regarding voltage drop for 240V copper branch circuits at 30A over 60 ft. Understand derating exclusions and compliance.",
+    "summary": "Learn about the 3% NEC informational note regarding voltage drop for 240V copper branch circuits at 30A over 60 ft. Understand derating exclusions and compliance.",
+    "engineeringNotesHtml": "<p>The National Electrical Code (NEC) provides guidelines to ensure safe and efficient electrical installations. One key aspect is the voltage drop in branch circuits. For a 240V copper branch circuit carrying 30A over a distance of 60 feet, the NEC recommends that the voltage drop should not exceed 3% of the supply voltage. This translates to a maximum allowable drop of 7.2 volts, ensuring that the equipment receives sufficient voltage for optimal performance.</p><p>It's important to note that derating factors, which may apply in certain conditions, are excluded from this calculation. This means that the 3% guideline stands independently, focusing solely on the voltage drop due to distance and load without additional adjustments for temperature or other environmental factors.</p>",
+    "codeReference": "Refer to NEC Article 210 for branch circuits and NEC Article 310 for conductors.",
+    "faqs": [
+      {
+        "question": "What is the significance of the 3% voltage drop guideline?",
+        "answer": "The 3% voltage drop guideline helps ensure that electrical equipment operates efficiently and safely, preventing performance issues due to insufficient voltage."
+      },
+      {
+        "question": "Are there any exceptions to the 3% rule?",
+        "answer": "While the 3% guideline is a standard recommendation, specific applications may have different requirements. Always consult local codes and regulations."
+      },
+      {
+        "question": "What does it mean that derating is excluded?",
+        "answer": "Excluding derating means that the 3% voltage drop calculation is based solely on the distance and load without considering additional factors like temperature or conductor bundling."
+      },
+      {
+        "question": "How do I calculate the voltage drop for my circuit?",
+        "answer": "To calculate voltage drop, you can use the formula: Voltage Drop (V) = 2 × Length (ft) × Current (A) × Resistance (Ω/ft). For copper conductors, refer to NEC tables for resistance values."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "system": "1ph-240",
+      "material": "copper",
+      "amps": 30,
+      "distanceFt": 60,
+      "maxDropPct": 3,
+      "conduit": "EMT",
+      "continuous": false,
+      "loadLabel": "Branch circuit"
+    },
+    "comparison": {
+      "kind": "distance",
+      "feet": [
+        60,
+        85
+      ]
+    }
+  },
+  {
+    "calculator": "stair-stringer",
+    "calculatorSlug": "stair-stringer-layout-calculator",
+    "cluster": "framing-roofing",
+    "slug": "generated-stair-rise-36-inch-layout",
+    "h1": "Stringer layout for a 36 inch rise",
+    "metaTitle": "Stair Design Calculator - Calculate Total Rise and Riser Height",
+    "metaDescription": "Use our stair design calculator to determine the total rise and ensure compliance with the IRC riser limit of 7.75 inches. Get accurate measurements for safe and comfortable stair construction.",
+    "summary": "Use our stair design calculator to determine the total rise and ensure compliance with the IRC riser limit of 7.75 inches. Get accurate measurements for safe and comfortable stair construction.",
+    "engineeringNotesHtml": "<p>When designing stairs, it's essential to consider the total rise, which in this case is 36 inches. According to the International Residential Code (IRC), the maximum riser height is limited to 7.75 inches. This means that the total number of risers should be calculated to ensure that each riser does not exceed this height.</p><p>It's important to note that headroom is not calculated in this context, but ensuring adequate headroom is crucial for safety and comfort in stair design.</p>",
+    "codeReference": "IRC R311.7.5",
+    "faqs": [
+      {
+        "question": "What is the maximum riser height allowed by the IRC?",
+        "answer": "The maximum riser height allowed by the IRC is 7.75 inches."
+      },
+      {
+        "question": "How do I calculate the number of risers for a total rise of 36 inches?",
+        "answer": "To calculate the number of risers, divide the total rise (36 inches) by the maximum riser height (7.75 inches). This will give you the number of risers needed to comply with the IRC."
+      },
+      {
+        "question": "Is headroom considered in stair design?",
+        "answer": "In this context, headroom is not calculated, but it is important to ensure that there is adequate headroom for safety and comfort."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "totalRiseIn": 36,
+      "targetRiseIn": 7.5,
+      "treadIn": 10.5,
+      "widthIn": 36,
+      "mount": "standard",
+      "landingThicknessIn": 1.5
+    },
+    "comparison": {
+      "kind": "total-rise",
+      "inches": [
+        36,
+        42
+      ]
+    }
+  },
+  {
+    "calculator": "roof-pitch",
+    "calculatorSlug": "roof-pitch-rafter-calculator",
+    "cluster": "framing-roofing",
+    "slug": "generated-10-12-gable-16ft-span",
+    "h1": "10/12 gable rafter on a 16 ft span",
+    "metaTitle": "Understanding Gable Roofs: 10/12 Pitch on a 16 ft Span",
+    "metaDescription": "Learn about gable roofs with a 10/12 pitch on a 16 ft span, including key concepts like multiplier, plumb cut, and considerations for snow load sizing.",
+    "summary": "Learn about gable roofs with a 10/12 pitch on a 16 ft span, including key concepts like multiplier, plumb cut, and considerations for snow load sizing.",
+    "engineeringNotesHtml": "<p>A gable roof with a 10/12 pitch means that for every 12 horizontal units, the roof rises 10 vertical units. This steep pitch can affect various calculations, including the multiplier used for determining the total roof area and load considerations.</p><p>The plumb cut refers to the angle cut made at the top of the rafters, which is crucial for ensuring a proper fit against the ridge board. Understanding these cuts is essential for accurate framing and structural integrity.</p>",
+    "codeReference": "Consult local building codes for specific requirements regarding roof design and snow load considerations.",
+    "faqs": [
+      {
+        "question": "What is a multiplier in roofing?",
+        "answer": "The multiplier is a factor used to calculate the total area of the roof based on its pitch. For a 10/12 pitch, this multiplier helps in determining the amount of materials needed and the overall load the roof will bear."
+      },
+      {
+        "question": "What is a plumb cut?",
+        "answer": "A plumb cut is the cut made at the top of a rafter that allows it to sit flush against the ridge board. It is essential for ensuring that the rafters are properly aligned and securely fastened."
+      },
+      {
+        "question": "Why is snow load not sized in this context?",
+        "answer": "Snow load sizing can vary significantly based on geographical location and specific building codes. In this context, it is important to consult local regulations to determine the appropriate snow load requirements for your gable roof."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "spanFt": 16,
+      "lengthFt": 24,
+      "pitchRise": 10,
+      "overhangFt": 1,
+      "ridgeIn": 1.5,
+      "style": "gable"
+    },
+    "comparison": {
+      "kind": "pitch",
+      "risePer12": [
+        10,
+        12
+      ]
+    }
+  },
+  {
+    "calculator": "container-pallet",
+    "calculatorSlug": "container-pallet-weight-calculator",
+    "cluster": "freight-logistics",
+    "slug": "generated-40ft-gma-single-load",
+    "h1": "40ft gma pallet load",
+    "metaTitle": "Understanding 40ft Container Payload and Dimensional Weight",
+    "metaDescription": "Learn about the payload limits, floor slots, and dimensional weight of a 40ft container with GMA pallets. Get insights into planning your cargo efficiently.",
+    "summary": "Learn about the payload limits, floor slots, and dimensional weight of a 40ft container with GMA pallets. Get insights into planning your cargo efficiently.",
+    "engineeringNotesHtml": "<p>When utilizing a 40ft container, it's essential to understand the implications of floor slots and dimensional weight. Floor slots refer to the designated areas within the container where pallets can be placed securely. For GMA pallets, which are not stackable, careful planning is necessary to maximize space without exceeding weight limits.</p><p>The dimensional weight of your cargo is calculated based on the volume it occupies, which in this case is 167 kg per cubic meter. This means that even if your cargo is lightweight, the space it occupies can affect the overall weight calculation for shipping. Always consider the payload limit as a planning figure to ensure compliance with shipping regulations and safety standards.</p>",
+    "codeReference": "Refer to the International Maritime Organization (IMO) and local shipping regulations for compliance guidelines.",
+    "faqs": [
+      {
+        "question": "What are floor slots in a 40ft container?",
+        "answer": "Floor slots are designated areas within the container where pallets can be placed securely. They help in organizing the cargo and ensuring stability during transport."
+      },
+      {
+        "question": "What does dimensional weight mean?",
+        "answer": "Dimensional weight is a pricing technique used by shipping companies that considers the volume of a package relative to its actual weight. For a 40ft container, the dimensional weight is calculated at 167 kg per cubic meter."
+      },
+      {
+        "question": "Why is the payload limit considered a planning figure?",
+        "answer": "The payload limit is a planning figure because it helps shippers determine the maximum weight that can be safely loaded into the container without exceeding legal and safety regulations."
+      },
+      {
+        "question": "Can GMA pallets be stacked in a 40ft container?",
+        "answer": "No, GMA pallets are not stackable, which means they must be arranged in a single layer within the container to ensure stability and safety during transport."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "container": "40ft",
+      "pallet": "gma",
+      "customPalletLengthIn": 48,
+      "customPalletWidthIn": 40,
+      "boxLengthIn": 16,
+      "boxWidthIn": 12,
+      "boxHeightIn": 12,
+      "boxWeightLb": 30,
+      "stackable": false,
+      "rateBasis": "cbm",
+      "rateUsd": 85
+    },
+    "comparison": {
+      "kind": "container",
+      "ids": [
+        "20ft",
+        "40ft",
+        "40hc",
+        "53ft"
+      ]
+    }
+  },
+  {
+    "calculator": "concrete-slab",
+    "calculatorSlug": "concrete-slab-rebar-calculator",
+    "cluster": "concrete-masonry",
+    "slug": "generated-18x20-slab-8-inch",
+    "h1": "18 by 20 ft slab at 8 inches",
+    "metaTitle": "Residential Slab Design Calculator - IRC R506 Compliance",
+    "metaDescription": "Calculate the specifications for an 18 ft by 20 ft residential slab at 8 in thickness with #4 bars at 18 in spacing. Ensure compliance with IRC R506 standards.",
+    "summary": "Calculate the specifications for an 18 ft by 20 ft residential slab at 8 in thickness with #4 bars at 18 in spacing. Ensure compliance with IRC R506 standards.",
+    "engineeringNotesHtml": "<p>This calculator is designed to assist in determining the specifications for a residential slab measuring 18 ft by 20 ft with a thickness of 8 inches. The reinforcement consists of #4 bars spaced 18 inches apart. Please note that soil design considerations are excluded from this calculation.</p><p>Ensure that your design adheres to the requirements outlined in IRC R506 for concrete slabs, which includes guidelines for thickness, reinforcement, and other structural considerations.</p>",
+    "codeReference": "IRC R506 - Concrete Floors on Ground",
+    "faqs": [
+      {
+        "question": "What is the purpose of using #4 bars in the slab?",
+        "answer": "The #4 bars provide tensile strength to the concrete slab, helping to prevent cracking and ensuring structural integrity."
+      },
+      {
+        "question": "Why is soil design excluded from this calculation?",
+        "answer": "Soil design is a separate consideration that depends on the specific site conditions and soil characteristics, which are not covered in this calculator."
+      },
+      {
+        "question": "What thickness is recommended for residential slabs?",
+        "answer": "For residential slabs, a thickness of 4 to 6 inches is commonly recommended, but in this case, an 8-inch thickness is specified for added strength."
+      },
+      {
+        "question": "How do I ensure compliance with IRC R506?",
+        "answer": "To ensure compliance with IRC R506, follow the guidelines for slab thickness, reinforcement placement, and other structural requirements as outlined in the code."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "lengthFt": 18,
+      "widthFt": 20,
+      "thicknessIn": 8,
+      "thickenedEdge": true,
+      "footingWidthIn": 12,
+      "footingDepthIn": 12,
+      "rebarSize": "4",
+      "spacingIn": 18,
+      "psi": 4000,
+      "waste": 0.1,
+      "readyMixPerYd3": 165,
+      "bag80Price": 6.75,
+      "bag60Price": 5.4
+    },
+    "comparison": {
+      "kind": "thickness",
+      "inches": [
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "calculator": "wire-size",
+    "calculatorSlug": "wire-size-voltage-drop-calculator",
+    "cluster": "electrical-solar",
+    "slug": "generated-30a-80ft-copper-voltage-drop",
+    "h1": "30 amp copper run at 80 feet",
+    "metaTitle": "Understanding 3% Voltage Drop for 240V Copper Circuits",
+    "metaDescription": "Learn about the 3% voltage drop rule for 240V copper branch circuits at 30A over 80 feet. Understand why derating is excluded and how it affects your electrical installations.",
+    "summary": "Learn about the 3% voltage drop rule for 240V copper branch circuits at 30A over 80 feet. Understand why derating is excluded and how it affects your electrical installations.",
+    "engineeringNotesHtml": "<p>The National Electrical Code (NEC) provides guidelines to ensure electrical systems operate safely and efficiently. One such guideline is the 3% voltage drop rule for branch circuits, which helps maintain optimal performance and safety in electrical installations.</p><p>For a 240V copper branch circuit carrying 30A over a distance of 80 feet, the 3% voltage drop would be 7.2 volts. This means that the voltage at the load should not drop below 232.8 volts to ensure proper operation. It's important to note that derating factors, such as temperature or conduit fill, are excluded when calculating the voltage drop for this specific scenario.</p>",
+    "codeReference": "Refer to NEC Article 210.19(A)(1) for branch circuits and the informational note regarding voltage drop.",
+    "faqs": [
+      {
+        "question": "What is the 3% voltage drop rule?",
+        "answer": "The 3% voltage drop rule suggests that the voltage drop in a branch circuit should not exceed 3% of the supply voltage to ensure efficient operation and minimize energy loss."
+      },
+      {
+        "question": "Why is derating excluded in this calculation?",
+        "answer": "Derating is excluded in the voltage drop calculation to provide a clear guideline for maintaining voltage levels without complicating the assessment with additional factors that may not directly affect the voltage drop."
+      },
+      {
+        "question": "How do I calculate voltage drop for my circuit?",
+        "answer": "To calculate voltage drop, use the formula: Voltage Drop (V) = (2 x Length of Circuit (ft) x Current (A) x Resistance of Conductor (ohms/ft)). For copper conductors, you can find resistance values in NEC tables."
+      },
+      {
+        "question": "What happens if the voltage drop exceeds 3%?",
+        "answer": "If the voltage drop exceeds 3%, it can lead to inefficient operation of electrical devices, potential overheating, and reduced lifespan of equipment."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "system": "1ph-240",
+      "material": "copper",
+      "amps": 30,
+      "distanceFt": 80,
+      "maxDropPct": 3,
+      "conduit": "EMT",
+      "continuous": false,
+      "loadLabel": "Branch circuit"
+    },
+    "comparison": {
+      "kind": "distance",
+      "feet": [
+        80,
+        105
+      ]
+    }
+  },
+  {
+    "calculator": "stair-stringer",
+    "calculatorSlug": "stair-stringer-layout-calculator",
+    "cluster": "framing-roofing",
+    "slug": "generated-stair-rise-48-inch-layout",
+    "h1": "Stringer layout for a 48 inch rise",
+    "metaTitle": "Stair Design Calculator - Calculate Total Rise and Riser Limits",
+    "metaDescription": "Use our stair design calculator to determine total rise and ensure compliance with IRC riser limits of 7.75 inches. Headroom calculations not included.",
+    "summary": "Use our stair design calculator to determine total rise and ensure compliance with IRC riser limits of 7.75 inches. Headroom calculations not included.",
+    "engineeringNotesHtml": "<p>When designing stairs, it's crucial to adhere to the International Residential Code (IRC) guidelines. For a total rise of 48 inches, the maximum riser height allowed is 7.75 inches. This means you can have a maximum of 6 risers (48 ÷ 7.75 = 6.19, rounded down to 6).</p><p>Note that headroom calculations are not included in this assessment and should be considered separately to ensure safety and comfort.</p>",
+    "codeReference": "IRC Section R311.7.5",
+    "faqs": [
+      {
+        "question": "What is the maximum riser height according to the IRC?",
+        "answer": "The maximum riser height allowed by the IRC is 7.75 inches."
+      },
+      {
+        "question": "How do I calculate the number of risers for a total rise of 48 inches?",
+        "answer": "To calculate the number of risers, divide the total rise by the maximum riser height. For a total rise of 48 inches, you would divide 48 by 7.75, which gives approximately 6 risers."
+      },
+      {
+        "question": "Is headroom included in the stair design calculations?",
+        "answer": "No, headroom calculations are not included in this assessment and should be evaluated separately."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "totalRiseIn": 48,
+      "targetRiseIn": 7.5,
+      "treadIn": 10.5,
+      "widthIn": 36,
+      "mount": "standard",
+      "landingThicknessIn": 1.5
+    },
+    "comparison": {
+      "kind": "total-rise",
+      "inches": [
+        48,
+        54
+      ]
+    }
+  },
+  {
+    "calculator": "roof-pitch",
+    "calculatorSlug": "roof-pitch-rafter-calculator",
+    "cluster": "framing-roofing",
+    "slug": "generated-3-12-gable-20ft-span",
+    "h1": "3/12 gable rafter on a 20 ft span",
+    "metaTitle": "Understanding Gable Roof Design: Key Concepts and Calculations",
+    "metaDescription": "Learn about gable roof design, including the multiplier, plumb cut, and considerations for snow load. Get insights on calculating a 3/12 pitch on a 20 ft span.",
+    "summary": "Learn about gable roof design, including the multiplier, plumb cut, and considerations for snow load. Get insights on calculating a 3/12 pitch on a 20 ft span.",
+    "engineeringNotesHtml": "<p>A gable roof with a 3/12 pitch indicates that for every 12 horizontal units, the roof rises 3 vertical units. This pitch is essential for determining the roof's slope and overall design. The multiplier is used in calculations to convert the horizontal span into the vertical rise, helping to establish the roof's height and structural integrity.</p><p>The plumb cut refers to the angle cut on the rafters that meets the ridge board, ensuring a proper fit and alignment. It is crucial for maintaining the roof's structural integrity and aesthetic appeal. Additionally, while snow load considerations are important in roof design, they are not sized in this context, meaning that local building codes and environmental factors should be consulted to ensure adequate support for potential snow accumulation.</p>",
+    "codeReference": "Refer to local building codes for specific requirements regarding snow load and structural integrity.",
+    "faqs": [
+      {
+        "question": "What does a 3/12 pitch mean?",
+        "answer": "A 3/12 pitch means that for every 12 horizontal units, the roof rises 3 vertical units, resulting in a slope of approximately 14 degrees."
+      },
+      {
+        "question": "What is a multiplier in roof calculations?",
+        "answer": "The multiplier is a factor used to convert horizontal measurements into vertical rises, helping to determine the overall height and slope of the roof."
+      },
+      {
+        "question": "What is a plumb cut?",
+        "answer": "A plumb cut is the angled cut made at the top of a rafter that allows it to fit securely against the ridge board, essential for proper roof framing."
+      },
+      {
+        "question": "Why is snow load not sized in this context?",
+        "answer": "Snow load considerations vary by location and are influenced by local building codes. It's important to consult these codes to ensure the roof can support potential snow accumulation."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "spanFt": 20,
+      "lengthFt": 24,
+      "pitchRise": 3,
+      "overhangFt": 1,
+      "ridgeIn": 1.5,
+      "style": "gable"
+    },
+    "comparison": {
+      "kind": "pitch",
+      "risePer12": [
+        3,
+        5
+      ]
+    }
+  },
+  {
+    "calculator": "container-pallet",
+    "calculatorSlug": "container-pallet-weight-calculator",
+    "cluster": "freight-logistics",
+    "slug": "generated-40ft-gma-stacked-load",
+    "h1": "40ft gma pallet load, stacked",
+    "metaTitle": "Understanding 40ft Container Capacity with GMA Pallets",
+    "metaDescription": "Explore the dimensions and payload limits of a 40ft container with GMA pallets. Learn about floor slots, dimensional weight, and planning figures for optimal loading.",
+    "summary": "Explore the dimensions and payload limits of a 40ft container with GMA pallets. Learn about floor slots, dimensional weight, and planning figures for optimal loading.",
+    "engineeringNotesHtml": "<p>A 40ft container is designed to accommodate GMA pallets efficiently, with specific floor slots that allow for secure stacking and transport. The dimensional weight of 167 kg per cubic meter is crucial for calculating shipping costs and ensuring compliance with weight regulations.</p><p>It's important to note that the payload limit is a planning figure and should be considered when loading the container to avoid overloading and ensure safe transport.</p>",
+    "codeReference": "Refer to the International Maritime Organization (IMO) guidelines for container weight limits and stacking regulations.",
+    "faqs": [
+      {
+        "question": "What are floor slots in a 40ft container?",
+        "answer": "Floor slots are designated areas within the container that allow for the secure placement and stacking of pallets, ensuring stability during transport."
+      },
+      {
+        "question": "What does 167 kg per cubic meter mean?",
+        "answer": "167 kg per cubic meter refers to the dimensional weight used in shipping calculations. It helps determine the cost of shipping based on the volume of the cargo rather than just its actual weight."
+      },
+      {
+        "question": "What is the significance of the payload limit?",
+        "answer": "The payload limit is a planning figure that indicates the maximum weight that can be safely loaded into the container. It is essential to adhere to this limit to ensure compliance with safety regulations and avoid potential damage during transport."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "container": "40ft",
+      "pallet": "gma",
+      "customPalletLengthIn": 48,
+      "customPalletWidthIn": 40,
+      "boxLengthIn": 16,
+      "boxWidthIn": 12,
+      "boxHeightIn": 12,
+      "boxWeightLb": 30,
+      "stackable": true,
+      "rateBasis": "cbm",
+      "rateUsd": 85
+    },
+    "comparison": {
+      "kind": "container",
+      "ids": [
+        "20ft",
+        "40ft",
+        "40hc",
+        "53ft"
+      ]
+    }
   }
 ]

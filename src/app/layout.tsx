@@ -39,6 +39,15 @@ export const metadata: Metadata = {
     description: "Jobsite calculators with live blueprint diagrams and bill-of-materials lists.",
   },
   robots: { index: true, follow: true },
+  icons: {
+    icon: [
+      { url: "/favicon-48x48.png?v=202611", sizes: "48x48", type: "image/png" },
+      { url: "/favicon-192x192.png?v=202611", sizes: "192x192", type: "image/png" },
+      { url: "/favicon.ico?v=202611", sizes: "48x48", type: "image/x-icon" },
+    ],
+    shortcut: ["/favicon-192x192.png?v=202611"],
+    apple: [{ url: "/apple-touch-icon.png?v=202611", sizes: "180x180", type: "image/png" }],
+  },
 };
 
 const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID?.trim() || "ca-pub-3430684260439635";

@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { MASTERS } from "@/data/catalog";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Calculators",
   description: "Concrete, electrical, framing, and freight calculators with live SVG blueprints.",
+  alternates: { canonical: `${SITE_URL}/calculators` },
 };
 
 export default function CalculatorsIndexPage() {

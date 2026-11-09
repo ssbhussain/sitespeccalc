@@ -12,8 +12,22 @@ function isPreset(value: unknown): value is Preset {
   return typeof row.slug === "string" && typeof row.calculator === "string" && CALCULATOR_IDS.has(row.calculator as CalculatorId);
 }
 
+function withUpdatedAt(preset: Preset, raw: unknown): Preset {
+  if (preset.updatedAt) return preset;
+  if (!raw || typeof raw !== "object") return preset;
+  const row = raw as { updatedAt?: unknown; updated_at?: unknown; created_at?: unknown };
+  const stamp =
+    (typeof row.updatedAt === "string" && row.updatedAt) ||
+    (typeof row.updated_at === "string" && row.updated_at) ||
+    (typeof row.created_at === "string" && row.created_at) ||
+    "";
+  return stamp ? { ...preset, updatedAt: stamp } : preset;
+}
+
 function readGeneratedPresets(): Preset[] {
-  return (generatedJson as unknown[]).filter(isPreset);
+  return (generatedJson as unknown[])
+    .filter(isPreset)
+    .map((preset, index) => withUpdatedAt(preset, (generatedJson as unknown[])[index]));
 }
 
 const CALCULATOR_CLUSTER = {
@@ -70,6 +84,14 @@ function mapRemote(row: Record<string, unknown>): Preset | null {
     faqs,
     formulaVersion: "SSC-2026.1",
     calculatorSlug,
+    updatedAt:
+      typeof row.updated_at === "string"
+        ? row.updated_at
+        : typeof row.created_at === "string"
+          ? row.created_at
+          : typeof row.updatedAt === "string"
+            ? row.updatedAt
+            : undefined,
     comparison: comparison as Preset["comparison"],
     defaultInputs: defaultInputs as never,
   };
@@ -90,7 +112,7 @@ async function loadRemotePresets(): Promise<Preset[]> {
     const { data, error } = await supabase
       .from("programmatic_presets")
       .select(
-        "calculator_slug,preset_slug,h1_title,meta_title,meta_description,default_inputs,engineering_notes_html,code_compliance_reference,faqs,is_published",
+        "calculator_slug,preset_slug,h1_title,meta_title,meta_description,default_inputs,engineering_notes_html,code_compliance_reference,faqs,is_published,updated_at,created_at",
       )
       .eq("is_published", true);
     if (error || !data) return [];

@@ -10,7 +10,8 @@ loadEnv({ path: ".env.local", override: true });
 
 const GENERATED_PATH = "src/data/generated-presets.json";
 const existing = new Set(PRESETS.map((preset) => preset.slug));
-const limit = readLimit();
+const CRAWL_BUDGET_PRESET_CAP = 420;
+const THROTTLED_BATCH = 5;
 const dryRun = process.argv.includes("--dry-run");
 
 function readLimit() {
@@ -91,7 +92,7 @@ const calculators = [
   },
 ];
 
-function buildSeeds(): Seed[] {
+function buildSeeds(count: number): Seed[] {
   const seeds: Seed[] = [];
   for (const lengthFt of [8, 10, 12, 14, 16, 18, 20, 24, 28, 30, 36, 40, 48]) {
     for (const widthFt of [8, 10, 12, 14, 16, 18, 20, 24, 30]) {
@@ -252,8 +253,20 @@ function buildSeeds(): Seed[] {
   }
   return takeAcrossCalculators(
     seeds.filter((seed) => !existing.has(seed.preset_slug)),
-    limit,
+    count,
   );
+}
+
+function resolveBatch() {
+  const requested = readLimit();
+  if (existing.size > CRAWL_BUDGET_PRESET_CAP) {
+    const batch = Math.min(requested, THROTTLED_BATCH);
+    console.log(
+      `Crawl-budget throttle: ${existing.size} published presets exceed ${CRAWL_BUDGET_PRESET_CAP}. Generating ${batch} ultra-high-intent pages instead of ${requested}.`,
+    );
+    return batch;
+  }
+  return requested;
 }
 
 function takeAcrossCalculators(seeds: Seed[], count: number) {
@@ -346,7 +359,7 @@ async function rememberRemoteSlugs() {
   }
 }
 
-function toPreset(seed: Seed, copy: GeneratedCopy) {
+function toPreset(seed: Seed, copy: GeneratedCopy, updatedAt?: string) {
   const meta = calculators.find((row) => row.slug === seed.calculator_slug);
   const inputs = { ...seed.default_inputs };
   const comparison = inputs.comparison;
@@ -366,6 +379,7 @@ function toPreset(seed: Seed, copy: GeneratedCopy) {
     formulaVersion: FORMULA_VERSION,
     defaultInputs: inputs,
     comparison,
+    updatedAt: updatedAt || new Date().toISOString(),
   };
 }
 
@@ -390,7 +404,7 @@ function appendGenerated(presets: ReturnType<typeof toPreset>[]) {
 
 async function main() {
   await rememberRemoteSlugs();
-  const seeds = buildSeeds();
+  const seeds = buildSeeds(resolveBatch());
   if (dryRun) {
     mkdirSync("scripts/output", { recursive: true });
     writeFileSync("scripts/output/seo-preview.json", JSON.stringify(seeds, null, 2));
@@ -463,7 +477,7 @@ async function main() {
       engineering_notes_html: rows[index].engineering_notes_html,
       code_compliance_reference: rows[index].code_compliance_reference,
       faqs: rows[index].faqs,
-    })));
+    }, rows[index].updated_at)));
     written += rows.length;
     console.log(`Upserted ${written} / ${seeds.length}`);
     await sleep(1500);

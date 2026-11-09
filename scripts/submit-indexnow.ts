@@ -57,7 +57,6 @@ async function collectUrls() {
   }
   for (const master of MASTERS) {
     urls.add(calculatorUrl(master.cluster, master.slug));
-    urls.add(`${origin}/embed/${master.calculatorSlug}`);
   }
   for (const preset of PRESETS) {
     urls.add(calculatorUrl(preset.cluster, preset.slug));

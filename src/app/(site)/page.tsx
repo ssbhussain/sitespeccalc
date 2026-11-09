@@ -67,10 +67,16 @@ export default function HomePage() {
             <Link href="/calculators/concrete-masonry/concrete-slab-rebar-calculator" className="rounded-md bg-amber-400 px-4 py-3 text-sm font-bold text-slate-950">
               Open the slab calculator
             </Link>
-            <Link href="/engineering-disclaimer" className="rounded-md border border-slate-600 px-4 py-3 text-sm font-semibold text-slate-100">
-              Read the engineering disclaimer
+            <Link href="/directory" className="rounded-md border border-slate-600 px-4 py-3 text-sm font-semibold text-slate-100">
+              Browse every spec
             </Link>
           </div>
+          <ul className="mt-6 flex flex-wrap gap-3 text-sm">
+            <li><Link className="text-amber-300 hover:text-amber-200" href="/calculators/concrete-masonry">Concrete & Masonry hub</Link></li>
+            <li><Link className="text-amber-300 hover:text-amber-200" href="/calculators/electrical-solar">Electrical, EV & Solar hub</Link></li>
+            <li><Link className="text-amber-300 hover:text-amber-200" href="/calculators/framing-roofing">Framing & Roofing hub</Link></li>
+            <li><Link className="text-amber-300 hover:text-amber-200" href="/calculators/freight-logistics">Freight & Logistics hub</Link></li>
+          </ul>
         </div>
       </section>
       <div className="mx-auto max-w-6xl px-4 py-10">

@@ -21,7 +21,7 @@ export async function generateMetadata({
     title: { absolute: `${page.metaTitle} | SiteSpecCalc` },
     description: page.metaDescription,
     alternates: { canonical: `${SITE_URL}/calculators/${page.cluster}/${page.slug}` },
-    robots: { index: true, follow: true },
+    robots: { index: false, follow: true },
   };
 }
 

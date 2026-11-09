@@ -120,6 +120,7 @@ export interface PresetBase {
   faqs: Faq[];
   formulaVersion: string;
   calculatorSlug: string;
+  updatedAt?: string;
 }
 
 export type Preset =

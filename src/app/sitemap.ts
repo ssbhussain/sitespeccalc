@@ -1,55 +1,69 @@
 import type { MetadataRoute } from "next";
 import { MASTERS } from "@/data/catalog";
 import { getPresetCatalog } from "@/lib/content";
-import { EMBED_CALCULATOR_SLUGS } from "@/lib/indexnow";
 import { CLUSTER_META, SITE_URL } from "@/lib/site";
+
+const LAUNCH = new Date("2026-10-24T00:00:00.000Z");
+const ORIGIN = SITE_URL.replace(/\/$/, "");
+
+function canonical(path: string) {
+  if (!path || path === "/") return ORIGIN;
+  return `${ORIGIN}${path.startsWith("/") ? path : `/${path}`}`.replace(/\/+$/, "");
+}
+
+function lastmod(value?: string) {
+  if (!value) return LAUNCH;
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? LAUNCH : parsed;
+}
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const presets = await getPresetCatalog();
-  const lastModified = "2026-10-24";
-  const staticRoutes = [
-    "",
-    "/calculators",
-    "/directory",
-    "/about",
-    "/privacy-policy",
-    "/terms-of-service",
-    "/engineering-disclaimer",
-    "/contact",
-  ].map((path) => ({
-    url: `${SITE_URL}${path || "/"}`.replace(/\/$/, "") || SITE_URL,
-    lastModified,
-    changeFrequency: "weekly" as const,
-    priority: path === "" ? 1 : 0.6,
-  }));
+  const rows: MetadataRoute.Sitemap = [
+    { url: canonical("/"), lastModified: LAUNCH, changeFrequency: "weekly", priority: 1 },
+    { url: canonical("/calculators"), lastModified: LAUNCH, changeFrequency: "weekly", priority: 0.6 },
+    { url: canonical("/directory"), lastModified: LAUNCH, changeFrequency: "weekly", priority: 0.6 },
+    { url: canonical("/about"), lastModified: LAUNCH, changeFrequency: "monthly", priority: 0.5 },
+    { url: canonical("/privacy-policy"), lastModified: LAUNCH, changeFrequency: "monthly", priority: 0.4 },
+    { url: canonical("/terms-of-service"), lastModified: LAUNCH, changeFrequency: "monthly", priority: 0.4 },
+    { url: canonical("/engineering-disclaimer"), lastModified: LAUNCH, changeFrequency: "monthly", priority: 0.4 },
+    { url: canonical("/contact"), lastModified: LAUNCH, changeFrequency: "monthly", priority: 0.5 },
+  ];
 
-  const clusters = Object.keys(CLUSTER_META).map((cluster) => ({
-    url: `${SITE_URL}/calculators/${cluster}`,
-    lastModified,
-    changeFrequency: "weekly" as const,
-    priority: 0.8,
-  }));
+  for (const cluster of Object.keys(CLUSTER_META)) {
+    rows.push({
+      url: canonical(`/calculators/${cluster}`),
+      lastModified: LAUNCH,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    });
+  }
 
-  const masters = MASTERS.map((item) => ({
-    url: `${SITE_URL}/calculators/${item.cluster}/${item.slug}`,
-    lastModified,
-    changeFrequency: "monthly" as const,
-    priority: 0.9,
-  }));
+  const seen = new Set(rows.map((row) => row.url));
 
-  const embeds = EMBED_CALCULATOR_SLUGS.map((slug) => ({
-    url: `${SITE_URL}/embed/${slug}`,
-    lastModified,
-    changeFrequency: "monthly" as const,
-    priority: 0.4,
-  }));
+  for (const item of MASTERS) {
+    const url = canonical(`/calculators/${item.cluster}/${item.slug}`);
+    if (seen.has(url)) continue;
+    seen.add(url);
+    rows.push({
+      url,
+      lastModified: lastmod(item.updatedAt),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    });
+  }
 
-  const pages = presets.map((item) => ({
-    url: `${SITE_URL}/calculators/${item.cluster}/${item.slug}`,
-    lastModified,
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
+  for (const item of presets) {
+    const url = canonical(`/calculators/${item.cluster}/${item.slug}`);
+    if (seen.has(url)) continue;
+    seen.add(url);
+    rows.push({
+      url,
+      lastModified: lastmod(item.updatedAt),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    });
+  }
 
-  return [...staticRoutes, ...clusters, ...masters, ...embeds, ...pages];
+  return rows;
 }

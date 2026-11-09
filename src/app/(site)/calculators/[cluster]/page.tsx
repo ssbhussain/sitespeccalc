@@ -4,7 +4,8 @@ import { notFound } from "next/navigation";
 import { TopLeaderboardAd } from "@/components/AdSlot";
 import { mastersForCluster } from "@/data/catalog";
 import { getPresetCatalog } from "@/lib/content";
-import { CLUSTER_META } from "@/lib/site";
+import { presetSpecLine } from "@/lib/preset-specs";
+import { CLUSTER_META, SITE_URL } from "@/lib/site";
 
 type ClusterParams = { cluster: string };
 
@@ -23,6 +24,7 @@ export async function generateMetadata({
   return {
     title: meta.title,
     description: meta.description,
+    alternates: { canonical: `${SITE_URL}/calculators/${cluster}` },
   };
 }
 
@@ -48,24 +50,26 @@ export default async function ClusterPage({ params }: { params: Promise<ClusterP
               <li key={master.slug}>
                 <Link href={`/calculators/${master.cluster}/${master.slug}`} className="block rounded-xl border border-slate-700 bg-[#111c31] p-4 hover:border-amber-400">
                   <h3 className="font-display text-xl">{master.h1}</h3>
+                  <p className="mt-2 font-mono text-sm text-amber-200">{presetSpecLine(master)}</p>
                   <p className="mt-2 text-sm text-slate-400">{master.summary}</p>
                 </Link>
               </li>
             ))}
           </ul>
         </section>
-      ) : (
-        <p className="mt-6 max-w-3xl text-sm leading-7 text-slate-300">
-          Freight pages do not invent a fifth formula. They open the slab, wire, stair, or roof calculator on a delivery question: truck loads at 10 cubic yards, bag pallets, rebar pounds, spool weight, and shingle bundles.
-        </p>
-      )}
+      ) : null}
       <section className="mt-8">
-        <h2 className="font-display text-2xl font-semibold">Preset pages</h2>
+        <h2 className="font-display text-2xl font-semibold">Every spec in this cluster</h2>
+        <p className="mt-2 text-sm text-slate-400">{presets.length} crawlable preset pages, each with a live calculator and a pre-calculated quantity line.</p>
         <ul className="mt-3 grid gap-3 md:grid-cols-2">
-          {presets.map((preset) => (
+          {presets
+            .slice()
+            .sort((a, b) => a.h1.localeCompare(b.h1))
+            .map((preset) => (
             <li key={preset.slug}>
               <Link href={`/calculators/${preset.cluster}/${preset.slug}`} className="block rounded-xl border border-slate-700 p-4 hover:border-amber-400">
                 <h3 className="font-semibold text-slate-100">{preset.h1}</h3>
+                <p className="mt-2 font-mono text-sm text-amber-200">{presetSpecLine(preset)}</p>
                 <p className="mt-2 text-sm text-slate-400">{preset.summary}</p>
               </Link>
             </li>

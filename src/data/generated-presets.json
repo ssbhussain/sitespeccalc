@@ -4706,5 +4706,257 @@
         65
       ]
     }
+  },
+  {
+    "calculator": "concrete-slab",
+    "calculatorSlug": "concrete-slab-rebar-calculator",
+    "cluster": "concrete-masonry",
+    "slug": "generated-20x10-slab-5-inch",
+    "h1": "20 by 10 ft slab at 5 inches",
+    "metaTitle": "Residential Slab Design Calculator - IRC R506 Compliant",
+    "metaDescription": "Calculate the requirements for a residential slab measuring 20 ft by 10 ft at 5 in thick with #4 bars at 18 in spacing. Ensure compliance with IRC R506 standards.",
+    "summary": "Calculate the requirements for a residential slab measuring 20 ft by 10 ft at 5 in thick with #4 bars at 18 in spacing. Ensure compliance with IRC R506 standards.",
+    "engineeringNotesHtml": "<p>This calculator provides essential information for designing a residential slab that measures 20 feet by 10 feet and is 5 inches thick. The design incorporates #4 reinforcement bars spaced at 18 inches, ensuring structural integrity.</p><p>Please note that soil design considerations are excluded from this calculation. For accurate results, consult a qualified professional for soil analysis and site-specific conditions.</p>",
+    "codeReference": "IRC R506 - Concrete Floors on Ground",
+    "faqs": [
+      {
+        "question": "What is the purpose of using #4 bars in the slab?",
+        "answer": "The #4 bars provide reinforcement to the concrete slab, helping to control cracking and improve load-bearing capacity."
+      },
+      {
+        "question": "Why is soil design excluded from this calculation?",
+        "answer": "Soil design is site-specific and requires a geotechnical analysis to assess the soil's bearing capacity and other factors that affect slab performance."
+      },
+      {
+        "question": "What does IRC R506 cover?",
+        "answer": "IRC R506 outlines the requirements for concrete floors on the ground, including thickness, reinforcement, and installation practices."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "lengthFt": 20,
+      "widthFt": 10,
+      "thicknessIn": 5,
+      "thickenedEdge": false,
+      "footingWidthIn": 12,
+      "footingDepthIn": 12,
+      "rebarSize": "4",
+      "spacingIn": 18,
+      "psi": 4000,
+      "waste": 0.1,
+      "readyMixPerYd3": 165,
+      "bag80Price": 6.75,
+      "bag60Price": 5.4
+    },
+    "comparison": {
+      "kind": "thickness",
+      "inches": [
+        4,
+        5,
+        6
+      ]
+    },
+    "updatedAt": "2026-11-10T10:36:17.046Z"
+  },
+  {
+    "calculator": "wire-size",
+    "calculatorSlug": "wire-size-voltage-drop-calculator",
+    "cluster": "electrical-solar",
+    "slug": "generated-60a-60ft-copper-voltage-drop",
+    "h1": "60 amp copper run at 60 feet",
+    "metaTitle": "Understanding 240V Copper Branch Circuits: NEC 3% Rule Explained",
+    "metaDescription": "Learn about the 3% NEC informational note for 240V copper branch circuits at 60A over 60 ft. Understand derating exclusions and ensure compliance.",
+    "summary": "Learn about the 3% NEC informational note for 240V copper branch circuits at 60A over 60 ft. Understand derating exclusions and ensure compliance.",
+    "engineeringNotesHtml": "<p>The National Electrical Code (NEC) provides guidelines for electrical installations to ensure safety and efficiency. When designing a 240V copper branch circuit rated at 60A over a distance of 60 feet, it is important to consider the 3% voltage drop guideline. This guideline suggests that the voltage drop should not exceed 3% of the supply voltage to maintain efficiency and performance.</p><p>For a 240V circuit, a 3% voltage drop equates to 7.2 volts, meaning the voltage at the load should not drop below 232.8 volts. It's essential to note that derating factors, which may apply in other scenarios, are excluded from this calculation for the purpose of the 3% rule.</p>",
+    "codeReference": "Refer to NEC Article 310 for conductor ampacity and voltage drop considerations.",
+    "faqs": [
+      {
+        "question": "What is the 3% voltage drop rule in the NEC?",
+        "answer": "The 3% voltage drop rule in the NEC suggests that the voltage drop in branch circuits should not exceed 3% of the supply voltage to ensure efficient operation and minimize energy loss."
+      },
+      {
+        "question": "Why is derating excluded from the 3% rule?",
+        "answer": "Derating factors are excluded from the 3% rule to simplify the calculation of voltage drop and to focus on maintaining system efficiency without complicating the design with additional adjustments."
+      },
+      {
+        "question": "How do I calculate the voltage drop for my circuit?",
+        "answer": "To calculate voltage drop, you can use the formula: Voltage Drop (V) = (2 * Length of Circuit (ft) * Current (A) * Resistance of Conductor (Ω/ft)). Ensure that the voltage drop does not exceed 7.2 volts for a 240V circuit."
+      },
+      {
+        "question": "What happens if my voltage drop exceeds 3%?",
+        "answer": "If the voltage drop exceeds 3%, it can lead to inefficient operation of electrical devices, potential overheating, and reduced lifespan of equipment. It's advisable to adjust the conductor size or circuit design to stay within the recommended limits."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "system": "1ph-240",
+      "material": "copper",
+      "amps": 60,
+      "distanceFt": 60,
+      "maxDropPct": 3,
+      "conduit": "EMT",
+      "continuous": true,
+      "loadLabel": "Branch circuit"
+    },
+    "comparison": {
+      "kind": "distance",
+      "feet": [
+        60,
+        85
+      ]
+    },
+    "updatedAt": "2026-11-10T10:36:19.001Z"
+  },
+  {
+    "calculator": "roof-pitch",
+    "calculatorSlug": "roof-pitch-rafter-calculator",
+    "cluster": "framing-roofing",
+    "slug": "generated-10-12-gable-24ft-span",
+    "h1": "10/12 gable rafter on a 24 ft span",
+    "metaTitle": "Understanding Gable Roof Calculations: 10/12 Pitch on a 24 ft Span",
+    "metaDescription": "Learn about gable roof construction, including pitch multiplier, plumb cut, and considerations for snow load sizing. Essential insights for builders and DIY enthusiasts.",
+    "summary": "Learn about gable roof construction, including pitch multiplier, plumb cut, and considerations for snow load sizing. Essential insights for builders and DIY enthusiasts.",
+    "engineeringNotesHtml": "<p>A gable roof with a 10/12 pitch means that for every 12 horizontal inches, the roof rises 10 inches. This pitch can be calculated using a multiplier, which helps determine the total rise over a given span. For a 24 ft span, the rise can be calculated as follows: 24 ft (span) / 2 (for half the roof) = 12 ft, and then applying the pitch multiplier (10/12) gives the total rise.</p><p>The plumb cut refers to the cut made at the top of the rafters, which is essential for ensuring that the rafters fit snugly against the ridge board. Proper plumb cuts are crucial for maintaining the structural integrity of the roof.</p>",
+    "codeReference": "Consult local building codes for specific requirements related to snow load and structural integrity.",
+    "faqs": [
+      {
+        "question": "What is a pitch multiplier?",
+        "answer": "A pitch multiplier is a ratio that helps calculate the rise of a roof based on its horizontal span. For a 10/12 pitch, the multiplier indicates that for every 12 inches horizontally, the roof rises 10 inches."
+      },
+      {
+        "question": "What is a plumb cut?",
+        "answer": "A plumb cut is the angled cut made at the top of a roof rafter that allows it to fit securely against the ridge board, ensuring proper alignment and structural support."
+      },
+      {
+        "question": "Why is snow load not sized in this calculation?",
+        "answer": "Snow load considerations vary by location and are influenced by local climate conditions. It is essential to consult local building codes to determine the appropriate snow load requirements for your specific area."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "spanFt": 24,
+      "lengthFt": 24,
+      "pitchRise": 10,
+      "overhangFt": 1,
+      "ridgeIn": 1.5,
+      "style": "gable"
+    },
+    "comparison": {
+      "kind": "pitch",
+      "risePer12": [
+        10,
+        12
+      ]
+    },
+    "updatedAt": "2026-11-10T10:36:18.625Z"
+  },
+  {
+    "calculator": "container-pallet",
+    "calculatorSlug": "container-pallet-weight-calculator",
+    "cluster": "freight-logistics",
+    "slug": "generated-53ft-epal-single-load",
+    "h1": "53ft epal pallet load",
+    "metaTitle": "53ft Container with EPAL Pallets: Understanding Floor Slots and Dimensional Weight",
+    "metaDescription": "Learn about the 53ft container specifications, including floor slots, dimensional weight of 167 kg/m³, and the implications of payload limits for your shipping needs.",
+    "summary": "Learn about the 53ft container specifications, including floor slots, dimensional weight of 167 kg/m³, and the implications of payload limits for your shipping needs.",
+    "engineeringNotesHtml": "<p>The 53ft container is designed to accommodate various cargo types, but specific features like floor slots play a crucial role in load distribution and securing pallets. Understanding these elements is essential for optimizing your shipping operations.</p><p>With a dimensional weight of 167 kg per cubic meter, it’s important to calculate your cargo's weight and volume accurately to avoid overloading and ensure compliance with shipping regulations.</p>",
+    "codeReference": "Refer to the International Maritime Organization (IMO) guidelines for container weight limits and safety standards.",
+    "faqs": [
+      {
+        "question": "What are floor slots in a 53ft container?",
+        "answer": "Floor slots are designed to accommodate the feet of pallets, allowing for secure stacking and stability during transport. In a container with non-stackable pallets, these slots help in organizing the load effectively."
+      },
+      {
+        "question": "What does a dimensional weight of 167 kg/m³ mean?",
+        "answer": "Dimensional weight is a pricing technique used by shipping companies that considers the volume of the cargo. A dimensional weight of 167 kg/m³ means that for every cubic meter of space occupied, the cargo is considered to weigh 167 kg for billing purposes."
+      },
+      {
+        "question": "What is the payload limit for a 53ft container?",
+        "answer": "The payload limit is a planning figure that indicates the maximum weight of cargo that can be safely loaded into the container. It is essential to adhere to this limit to ensure safety and compliance with transport regulations."
+      },
+      {
+        "question": "Can I stack EPAL pallets in a 53ft container?",
+        "answer": "No, EPAL pallets are not stackable in this configuration. It is important to arrange them properly within the container to maximize space while ensuring stability."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "container": "53ft",
+      "pallet": "epal",
+      "customPalletLengthIn": 48,
+      "customPalletWidthIn": 40,
+      "boxLengthIn": 16,
+      "boxWidthIn": 12,
+      "boxHeightIn": 12,
+      "boxWeightLb": 30,
+      "stackable": false,
+      "rateBasis": "cbm",
+      "rateUsd": 85
+    },
+    "comparison": {
+      "kind": "container",
+      "ids": [
+        "20ft",
+        "40ft",
+        "40hc",
+        "53ft"
+      ]
+    },
+    "updatedAt": "2026-11-10T10:36:32.466Z"
+  },
+  {
+    "calculator": "concrete-slab",
+    "calculatorSlug": "concrete-slab-rebar-calculator",
+    "cluster": "concrete-masonry",
+    "slug": "generated-20x10-slab-6-inch",
+    "h1": "20 by 10 ft slab at 6 inches",
+    "metaTitle": "Residential Slab Design Calculator - IRC R506 Compliant",
+    "metaDescription": "Calculate the requirements for a residential slab measuring 20 ft by 10 ft at 6 in thick with #4 bars at 18 in spacing. Ensure compliance with IRC R506 standards. Soil design is excluded.",
+    "summary": "Calculate the requirements for a residential slab measuring 20 ft by 10 ft at 6 in thick with #4 bars at 18 in spacing. Ensure compliance with IRC R506 standards. Soil design is excluded.",
+    "engineeringNotesHtml": "<p>This calculator is designed to assist in determining the specifications for a residential slab measuring 20 feet by 10 feet and 6 inches thick. The reinforcement consists of #4 bars spaced 18 inches apart, following the guidelines set forth in the IRC R506.</p><p>Please note that soil design considerations are excluded from this calculation. It is essential to consult a qualified professional for soil analysis and design requirements.</p>",
+    "codeReference": "IRC R506",
+    "faqs": [
+      {
+        "question": "What is the purpose of #4 bars in the slab?",
+        "answer": "The #4 bars provide reinforcement to the concrete slab, helping to control cracking and improve structural integrity."
+      },
+      {
+        "question": "Why is soil design excluded from this calculation?",
+        "answer": "Soil design is a critical aspect that requires specific analysis based on local conditions, which is beyond the scope of this calculator."
+      },
+      {
+        "question": "What does IRC R506 cover?",
+        "answer": "IRC R506 outlines the requirements for concrete floors and slabs, including thickness, reinforcement, and installation practices."
+      },
+      {
+        "question": "Can I use this calculator for larger slabs?",
+        "answer": "This calculator is specifically designed for a 20 ft by 10 ft slab. For larger slabs, additional calculations and considerations may be necessary."
+      }
+    ],
+    "formulaVersion": "SSC-2026.1",
+    "defaultInputs": {
+      "lengthFt": 20,
+      "widthFt": 10,
+      "thicknessIn": 6,
+      "thickenedEdge": true,
+      "footingWidthIn": 12,
+      "footingDepthIn": 12,
+      "rebarSize": "4",
+      "spacingIn": 18,
+      "psi": 4000,
+      "waste": 0.1,
+      "readyMixPerYd3": 165,
+      "bag80Price": 6.75,
+      "bag60Price": 5.4
+    },
+    "comparison": {
+      "kind": "thickness",
+      "inches": [
+        4,
+        5,
+        6
+      ]
+    },
+    "updatedAt": "2026-11-10T10:36:33.588Z"
   }
 ]
